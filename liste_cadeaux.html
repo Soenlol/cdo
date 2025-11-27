@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste de Cadeaux ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        0 0 40px rgba(255, 255, 255, 0.1),
+                        inset 0 0 20px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card h2 {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 1.2em;
+            margin: 15px 0;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2),
+                        0 0 20px rgba(255, 255, 255, 0.3),
+                        inset 0 0 10px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .final-section h2 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .final-section p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .cat-meme {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎁 Ma Liste de Cadeaux 🎁</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>🔥 Chauffrette Rechargeable</h2>
+            <p>Pour combattre le froid glacial !</p>
+            <p class="price">10-15 €</p>
+            <a href="https://www.amazon.fr/OCOOPA-Rechargeable-Chauffrette-Chaufferette-Reutilisable/dp/B0CC189314/ref=sr_1_3_sspa?adgrpid=164039364217&dib=eyJ2IjoiMSJ9.Gdhu1Q7etVkr_j5nxyo2590Q6ycHcrqDJiQ4xD4rG5OkBZN8eTqa1QIHDAVTHCG58JtsxT9E1y7_O8Dvxyw4gLZasW3n-hsE392T7Wu68K8s6bJoeLXPkafl_QQym1pktJFwRbCe99Ipl4J0RjRoWigYuVokK6HfsxuPAMsTErwOY2yVGW3WUDpSsMQ7oWiB7F2Zkc4TuvZuy8dmRexVZF1aPy-F4ozEwowKll-GuzpeIwejLsOr6A-x05eQtuXhNumfUmgfS6xeNe8CnFNOWG1iOFD-bfWOFu2ZT5cNYWI.zzmDFnSxlA9xWBLdvZixpN6LM4_K5NV306znjsUbPY0&dib_tag=se&hvadid=710051283007&hvdev=c&hvexpln=0&hvlocphy=9197432&hvnetw=g&hvocijid=15320612918156564168--&hvqmt=e&hvrand=15320612918156564168&hvtargid=kwd-2372114703539&hydadcr=24344_2388417&keywords=chaufferette%2Bfroide&mcid=ca7ece90dc4c32899a1bb1977074da1c&qid=1764253291&sr=8-3-spons&aref=CQIQ6zPrpY&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" class="btn" target="_blank">
+                <span>Voir le produit ✨</span>
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>🧦 Chaussons Chauffants</h2>
+            <p>Des pieds bien au chaud !</p>
+            <p class="price">15-20 €</p>
+            <a href="https://www.natureetdecouvertes.com/bien-etre/relaxation-sommeil/bouillottes-coussins-chauffants/chaussons-chauffants-gris-92051110" class="btn" target="_blank">
+                <span>Voir le produit ✨</span>
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>💆 Massage Pro Max</h2>
+            <p>Main de massage électronique vibrante</p>
+            <p class="price">10 €</p>
+            <a href="https://www.decathlon.fr/p/main-de-massage-electronique-vibrante/_/R-p-304100?mc=8518808&utm_source=google&utm_medium=sea&utm_campaign=fr_t-perf_ct-shopp_n-shopping-mq-nutrition-mp_ts-bra_f-cv_o-roas_&utm_term=_n-shopping-mq-nutrition-mp_ts-bra_pt-pb_yy-nutrition-et-soin_main-de-massage&gad_source=1&gad_campaignid=20957419839&gbraid=0AAAAADonRCZsWUhHpsLHwAljWCyMSm3jL&gclid=Cj0KCQiAiqDJBhCXARIsABk2kSlRobbuY0tHc5dms5SehEk8D-xq5q2C4hMBgcuaPjGCwn9-Ydyi2noaAtYbEALw_wcB" class="btn" target="_blank">
+                <span>Voir le produit ✨</span>
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>🧠 Massage Tête</h2>
+            <p>Pour accompagner les cours trop durs !</p>
+            <p class="price">9 €</p>
+            <a href="https://www.cadomaestro.com/masse-tete-aluminium-302.html" class="btn" target="_blank">
+                <span>Voir le produit ✨</span>
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>🎁 Site Tout à 10-20€</h2>
+            <p>Tout le site, n'importe lequel me va !</p>
+            <p class="price">10-20 €</p>
+            <a href="https://www.lavantgardiste.com/collections/cadeau-moins-de-10-euros" class="btn" target="_blank">
+                <span>Voir le produit ✨</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="final-section">
+        <h2>💝 Choisis ton cadeau préf</h2>
+        <p>Je les aime tous ! 😻</p>
+        <img src="https://i.imgflip.com/2/1nhqil.jpg" alt="Chat mignon heureux" class="cat-meme">
+    </div>
+</body>
+</html>
