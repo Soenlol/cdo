@@ -1,0 +1,1508 @@
+<title>Révision éval 3 d’anglais</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  /* Layout: one 46rem study column under a sticky tab bar; only the live card / question is raised. */
+  --bg:#0c141e;
+  --surface:#131e2a;
+  --raised:#1b2937;
+  --line:#2b3c4e;
+  --fg:#e6edf4;
+  --muted:#95a7b9;
+  --accent:#86bfdc;          /* ceil blue, the colour of surgical scrubs */
+  --accent-2:#b7d9eb;
+  --on-accent:#08141d;
+  --good:#5cc995; --good-bg:rgba(92,201,149,.13);
+  --bad:#f38a83;  --bad-bg:rgba(243,138,131,.13);
+  --warn:#eab95a; --warn-bg:rgba(234,185,90,.14);
+  --shadow:0 14px 34px rgba(0,0,0,.38);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --tabs-h:58px;
+  --gl:max(16px, env(safe-area-inset-left, 0px));
+  --gr:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f1f5f8; --surface:#ffffff; --raised:#e8eff5; --line:#cddae4; --fg:#122130; --muted:#53677a;
+    --accent:#1b6890; --accent-2:#124e6d; --on-accent:#ffffff;
+    --good:#16804e; --good-bg:rgba(22,128,78,.10); --bad:#b8392f; --bad-bg:rgba(184,57,47,.09); --warn:#8a5a03; --warn-bg:rgba(138,90,3,.10);
+    --shadow:0 10px 26px rgba(18,33,48,.10);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f1f5f8; --surface:#ffffff; --raised:#e8eff5; --line:#cddae4; --fg:#122130; --muted:#53677a;
+  --accent:#1b6890; --accent-2:#124e6d; --on-accent:#ffffff;
+  --good:#16804e; --good-bg:rgba(22,128,78,.10); --bad:#b8392f; --bad-bg:rgba(184,57,47,.09); --warn:#8a5a03; --warn-bg:rgba(138,90,3,.10);
+  --shadow:0 10px 26px rgba(18,33,48,.10);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font:400 1rem/1.55 var(--f-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:46rem;margin-inline:auto;padding-left:var(--gl);padding-right:var(--gr);padding-block:22px 80px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.12;text-wrap:balance;margin:0;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.35rem}
+h3{font-size:1.08rem;font-weight:600}
+p{margin:0}
+b,strong{font-weight:700}
+code,.mono{font-family:var(--f-mono);font-weight:500}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--accent)}
+
+/* ---------- header ---------- */
+.hero{display:grid;gap:12px;padding-block:6px 18px}
+.eyebrow{font:600 .74rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(1.75rem,5.4vw,2.5rem)}
+.scope{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.scope li{font-size:.86rem;padding:.28rem .62rem;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.method{font-size:.9rem;color:var(--muted)}
+.method b{color:var(--fg)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin-left:calc(-1 * var(--gl));margin-right:calc(-1 * var(--gr));padding-left:calc(var(--gl) - 4px);padding-right:calc(var(--gr) - 4px);height:var(--tabs-h);align-items:flex-end}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:0;background:none;padding:.7rem .85rem .78rem;font-weight:700;font-size:.97rem;color:var(--muted);border-bottom:3px solid transparent;border-radius:0}
+.tab[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--fg)}
+.panel{padding-top:20px;display:grid;gap:16px}
+.panel>*,.q-card>*,.score-card>*,.ex-sec>*,.eq>*{min-width:0}
+
+/* ---------- generic ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--raised);color:var(--fg);border-radius:10px;padding:.68rem 1rem;font-weight:700;font-size:.95rem;line-height:1.2;display:inline-flex;align-items:center;gap:.45rem;justify-content:center}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.btn.primary:hover{background:var(--accent-2)}
+.btn.good{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.btn.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.btn.ghost{background:transparent}
+.btn[disabled]{opacity:.45;cursor:default}
+.pg{font:600 .72rem/1 var(--f-mono);letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:.25rem .4rem;white-space:nowrap}
+.term{font-family:var(--f-mono);font-weight:600;font-size:1.25em}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--accent);margin-inline:.15em;transform:translateY(-.15em)}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.45rem .8rem;font-size:.9rem;font-weight:700;display:inline-flex;gap:.5rem;align-items:baseline}
+.chip .n{font:600 .74rem var(--f-mono);color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.chip[aria-pressed="true"] .n{color:var(--on-accent);opacity:.8}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:.5rem .8rem;font-size:.88rem;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--raised);color:var(--fg)}
+.bar{height:6px;border-radius:99px;background:var(--raised);overflow:hidden;flex:1;min-width:80px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.kbd{font:500 .78rem var(--f-mono);color:var(--muted)}
+.stat{font:600 .85rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- flashcards ---------- */
+.decks{display:flex;flex-wrap:wrap;gap:8px}
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-inner{display:grid;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 20px 18px;min-height:15rem;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.face.back{transform:rotateY(180deg);background:var(--raised)}
+.fc:focus-visible .face{outline:3px solid var(--accent);outline-offset:2px}
+.fc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.fc-tag{font:600 .72rem var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.fc-q{font-size:1.28rem;line-height:1.4;flex:1;display:flex;align-items:center}
+.fc-a{font-family:var(--f-display);font-weight:800;font-size:1.65rem;line-height:1.15}
+.fc-sub{font-size:1.02rem}
+.fc-note{font-size:.92rem;color:var(--muted)}
+.fc-hint{font-size:.8rem;color:var(--muted)}
+.fc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fc-actions .btn{padding:.9rem 1rem;font-size:1rem}
+.fc-progress{display:flex;align-items:center;gap:12px}
+
+/* ---------- exercises ---------- */
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14.5rem,1fr));gap:10px}
+.ex-group{display:grid;gap:10px}
+.ex-group h2{font-size:1.05rem;color:var(--muted);font-family:var(--f-mono);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.tile{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:14px;display:grid;gap:6px;min-width:0}
+.tile:hover{border-color:var(--accent)}
+.tile .t{font-weight:700;font-size:1rem;line-height:1.3}
+.tile .d{font-size:.86rem;color:var(--muted)}
+.tile .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:2px}
+.fmt{font:600 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;padding:.2rem .45rem;border-radius:6px;background:var(--raised);color:var(--muted)}
+.best{font:600 .78rem var(--f-mono);color:var(--good)}
+.q-card{display:grid;gap:14px}
+.q-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.q-label{font:600 .74rem var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.q-text{font-size:1.22rem;line-height:1.45}
+.q-hint{font-size:.92rem;color:var(--muted)}
+.q-hint b{color:var(--fg)}
+.inp{width:100%;font:500 1.12rem var(--f-body);padding:.78rem .9rem;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg)}
+textarea.inp{min-height:5.2rem;resize:vertical;line-height:1.45}
+.inp:focus{border-color:var(--accent);outline:none}
+#qForm{flex-wrap:nowrap}
+#qForm .inp{flex:1 1 auto;min-width:0;width:100%}
+#qForm .btn{flex:0 0 auto}
+.inp.ok{border-color:var(--good)} .inp.ko{border-color:var(--bad)} .inp.near{border-color:var(--warn)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));gap:8px}
+.opts.long{grid-template-columns:1fr}
+.opt{border:1.5px solid var(--line);background:var(--raised);border-radius:10px;padding:.8rem .7rem;font-weight:700;font-size:1rem;text-align:center}
+.opts.long .opt{text-align:left;font-weight:500}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.right{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:10px;padding:12px 14px;display:grid;gap:4px;font-size:.98rem}
+.fb.ok{background:var(--good-bg);border:1px solid var(--good)}
+.fb.ko{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb.near{background:var(--warn-bg);border:1px solid var(--warn)}
+.fb .h{font-weight:700}
+.fb.ok .h{color:var(--good)} .fb.ko .h{color:var(--bad)} .fb.near .h{color:var(--warn)}
+.keys{display:flex;flex-wrap:wrap;gap:6px}
+.key{font-size:.84rem;padding:.25rem .55rem;border-radius:999px;border:1px solid var(--line)}
+.key.y{border-color:var(--good);color:var(--good);background:var(--good-bg)}
+.key.n{border-color:var(--bad);color:var(--bad);background:var(--bad-bg)}
+.model{font-size:1.04rem}
+.model li{margin-block:2px}
+.review{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.review li{border-left:3px solid var(--bad);padding:.35rem .7rem;background:var(--surface);border-radius:0 8px 8px 0;font-size:.95rem}
+.review li .ans{color:var(--good);font-weight:700}
+.big{font-family:var(--f-display);font-weight:800;font-size:2.6rem;line-height:1}
+
+/* ---------- exam ---------- */
+.timerbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabs-h));z-index:15;background:var(--bg);margin-left:calc(-1 * var(--gl));margin-right:calc(-1 * var(--gr));padding-block:10px;padding-left:var(--gl);padding-right:var(--gr);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.clock{font:600 1.5rem var(--f-mono);font-variant-numeric:tabular-nums}
+.clock.warn{color:var(--warn)} .clock.bad{color:var(--bad)}
+.ex-sec{display:grid;gap:12px}
+.ex-sec h2{font-size:1.12rem}
+.ex-sec h2 .pts{font:600 .78rem var(--f-mono);color:var(--muted);margin-left:.4rem}
+.eq{display:grid;gap:8px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.eq label{display:flex;gap:.6rem;font-size:1.04rem;line-height:1.45}
+.eq .num{font:600 .9rem var(--f-mono);color:var(--muted);min-width:1.6rem}
+.eq.ok{border-color:var(--good)} .eq.ko{border-color:var(--bad)}
+.eq .corr{font-size:.95rem}
+.eq .corr .ans{color:var(--good);font-weight:700}
+.grade3{display:flex;gap:6px;flex-wrap:wrap}
+.grade3 button{border:1px solid var(--line);background:var(--raised);border-radius:8px;padding:.45rem .7rem;font-weight:700;font-size:.88rem}
+.grade3 button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.score-card{display:grid;gap:10px}
+.score-row{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end}
+
+/* ---------- fiches ---------- */
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.toc a{font-size:.86rem;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:.3rem .65rem;color:var(--fg);background:var(--surface)}
+.sheet{display:grid;gap:12px;scroll-margin-top:calc(var(--tabs-h) + 12px)}
+.sheet h2{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.rule{display:grid;gap:6px;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.rule .k{font-family:var(--f-display);font-weight:800;font-size:1.2rem;color:var(--accent)}
+.rule ul{margin:0;padding-left:1.1rem;display:grid;gap:4px}
+.ex-line{font-style:italic}
+.warnbox{border:1px solid var(--warn);background:var(--warn-bg);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.warnbox h3{color:var(--warn)}
+.warnbox ul{margin:0;padding-left:1.1rem;display:grid;gap:4px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:.55rem .7rem;border-bottom:1px solid var(--line)}
+th{font:600 .74rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--raised)}
+tr:last-child td{border-bottom:0}
+td.w{font-weight:700;white-space:nowrap}
+td.end{font-family:var(--f-mono);white-space:nowrap}
+.qtable td,.qtable th{text-align:center}
+.qtable td:first-child,.qtable th:first-child{text-align:left}
+.qtable td b{font-family:var(--f-display);font-size:1.05rem}
+
+@media (max-width:640px){
+  .decks{flex-wrap:nowrap;overflow-x:auto;margin-left:calc(-1 * var(--gl));margin-right:calc(-1 * var(--gr));padding-left:var(--gl);padding-right:var(--gr);padding-bottom:2px;scrollbar-width:none}
+  .decks::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto}
+}
+@media (max-width:520px){
+  .tabs{gap:0;justify-content:space-between;padding-left:calc(var(--gl) - 8px);padding-right:calc(var(--gr) - 8px)}
+  .tab{padding:.65rem .45rem .72rem;font-size:.9rem}
+  .kbd{display:none}
+  .hero{gap:10px}
+  .scope li{font-size:.8rem}
+  .fc-q{font-size:1.14rem}
+  .fc-a{font-size:1.45rem}
+  .q-text{font-size:1.1rem}
+  .face{min-height:13.5rem;padding:18px 16px 16px}
+}
+@media (prefers-reduced-motion: reduce){
+  .fc-inner{transition:none}
+  .bar i{transition:none}
+}
+/* ---------- eval 3 additions ---------- */
+.scale{display:grid;gap:8px;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.scale-track{position:relative;height:10px;border-radius:99px;background:linear-gradient(90deg,var(--good),var(--warn) 55%,var(--bad));margin:28px 6px 34px}
+.scale-pt{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--fg);border:3px solid var(--surface)}
+.scale-lab{position:absolute;bottom:16px;transform:translateX(-50%);font:800 .95rem var(--f-display);white-space:nowrap}
+.scale-sub{position:absolute;top:16px;transform:translateX(-50%);font:600 .74rem var(--f-mono);color:var(--muted);white-space:nowrap}
+.scale-ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair>*{min-width:0}
+.vs{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface);display:grid;gap:4px}
+.vs .k{font-family:var(--f-display);font-weight:800;font-size:1.1rem}
+.vs.good{border-color:var(--good)} .vs.good .k{color:var(--good)}
+.vs.bad{border-color:var(--bad)} .vs.bad .k{color:var(--bad)}
+.tf{font:700 .78rem var(--f-mono);padding:.15rem .45rem;border-radius:6px;white-space:nowrap}
+.tf.t{color:var(--good);background:var(--good-bg)} .tf.f{color:var(--bad);background:var(--bad-bg)}
+@media (max-width:520px){ .pair{grid-template-columns:1fr} .scale-sub{font-size:.66rem} }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Anglais dentaire · Éval 3 · 15–20 min</p>
+    <h1>Révision éval 3 d’anglais</h1>
+    <ul class="scope" aria-label="Programme de l’éval">
+      <li><b>Vocabulaire</b> p.25 → 35</li>
+      <li>Point 4 : THE MODALS</li>
+      <li>Point 5 : LES INTERROGATIFS</li>
+    </ul>
+    <p class="method"><b>Méthode :</b> fiches (10 min) → flashcards jusqu’à tout savoir → exercices → examen blanc chronométré → refais tes erreurs.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Modes de révision">
+    <button class="tab" role="tab" id="tab-flash" aria-controls="panel-flash" aria-selected="true">Flashcards</button>
+    <button class="tab" role="tab" id="tab-ex" aria-controls="panel-ex" aria-selected="false" tabindex="-1">Exercices</button>
+    <button class="tab" role="tab" id="tab-exam" aria-controls="panel-exam" aria-selected="false" tabindex="-1">Examen blanc</button>
+    <button class="tab" role="tab" id="tab-fiches" aria-controls="panel-fiches" aria-selected="false" tabindex="-1">Fiches</button>
+  </nav>
+
+  <main>
+    <section class="panel" id="panel-flash" role="tabpanel" aria-labelledby="tab-flash">
+      <div class="decks" id="decks" role="group" aria-label="Paquets de cartes"></div>
+      <div class="fc-tools">
+        <div class="seg" id="dirSeg" role="group" aria-label="Sens des cartes"></div>
+        <div class="row">
+          <button class="btn ghost" id="fcShuffle" aria-pressed="true">Mélanger : oui</button>
+          <button class="btn ghost" id="fcRestart">Recommencer</button>
+        </div>
+      </div>
+      <div id="fcStage"></div>
+    </section>
+
+    <section class="panel" id="panel-ex" role="tabpanel" aria-labelledby="tab-ex" hidden>
+      <div id="exHome" class="panel" style="padding-top:0"></div>
+      <div id="exRun" hidden></div>
+    </section>
+
+    <section class="panel" id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
+      <div id="examIntro"></div>
+      <div id="examRes" hidden></div>
+      <div id="examRun" hidden></div>
+    </section>
+
+    <section class="panel" id="panel-fiches" role="tabpanel" aria-labelledby="tab-fiches" hidden>
+      <div id="fichesBody" class="panel" style="padding-top:0"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* =========================================================
+   1. UTILITAIRES
+   ========================================================= */
+var $ = function (s, el) { return (el || document).querySelector(s); };
+var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function shuffle(arr) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function pick(arr, n) { return shuffle(arr).slice(0, n); }
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+var store = {
+  get: function (k, d) { try { var v = localStorage.getItem('revang3.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set: function (k, v) { try { localStorage.setItem('revang3.' + k, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } }
+};
+function norm(s, articles) {
+  var t = String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[‘’`´]/g, "'").replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ').trim();
+  if (articles) t = t.replace(/^(a|an|the|to) /, '');
+  return t;
+}
+function squash(s, articles) { return norm(s, articles).replace(/[ '-]/g, ''); }
+function lev(a, b) {
+  if (a === b) return 0;
+  var m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  var prev = [], cur = [], i, j;
+  for (j = 0; j <= n; j++) prev[j] = j;
+  for (i = 1; i <= m; i++) {
+    cur = [i];
+    for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+function blankify(s) { return esc(s).replace(/_{3,}/g, '<span class="blank" aria-label="trou"></span>'); }
+function smart(s) { return String(s || '').replace(/[‘’`´]/g, "'"); }
+
+/* =========================================================
+   2. CONTENU · vocabulaire p.25–35
+   ========================================================= */
+var DISEASES = [
+  { w: 'cold', name: 'Cold', alt: ['common cold', 'a cold'], fr: 'rhume', src: 'p.25', type: 'contagious viral (but often benign) disease', d: 'Tiredness, coughing, sneezing, temperature.' },
+  { w: 'sickle cell anemia', name: 'Sickle cell anemia', alt: ['sickle-cell anemia', 'sickle cell anaemia', 'sickle cell disease'], fr: 'drépanocytose', src: 'p.25', type: 'genetic disorder (esp. in Africa)', d: 'Anemia, episodes of pain, blocking of the blood flow in hands and feet, possible delayed growth or puberty.' },
+  { w: 'influenza', name: 'Influenza (flu)', alt: ['flu', 'influenza flu', 'the flu'], fr: 'grippe', src: 'p.25', type: 'contagious viral (and sometimes fatal) disease', d: 'Chills, fever, severe headache, coughing, weakness, muscle pain, sore throat.' },
+  { w: 'pneumonia', name: 'Pneumonia', alt: [], fr: 'pneumonie', src: 'p.25', type: 'inflammation (bacteria, viruses, fungi, parasites, chemicals…)', d: 'Cough, chest pain, fever, difficulty breathing.' },
+  { w: 'tuberculosis', name: 'Tuberculosis', alt: ['tb'], fr: 'tuberculose', src: 'p.25', type: 'bacterial infection', d: 'Chronic cough, fever, night sweats, weight loss, blood-tinged sputum.' },
+  { w: 'cancer', name: 'Cancer', alt: [], fr: 'cancer', src: 'p.25', type: 'neoplasm', d: 'Malignant tumour (except for some forms); affects a lot of organs.' },
+  { w: 'heart failure', name: 'Heart failure', alt: ['cardiac failure'], fr: 'insuffisance cardiaque', src: 'p.26', type: 'structural or functional problem', d: 'Shortness of breath, coughing, ankle swelling, reduced exercise capacity.' },
+  { w: 'aids', name: 'AIDS', alt: [], fr: 'sida', src: 'p.26', type: 'viral infection', d: 'A wide spectrum of bacterial, viral or fungal conditions whose nature and intensity depend on the stage of the disease.' },
+  { w: 'obesity', name: 'Obesity', alt: [], fr: 'obésité', src: 'p.26', type: 'malnutrition', d: 'Excessive body fat; increases the likelihood of other diseases (type 2 diabetes, cardiac problems…).' },
+  { w: 'cirrhosis', name: 'Cirrhosis', alt: [], fr: 'cirrhose', src: 'p.26', type: 'consequence of chronic liver disease', d: 'A wide variety of symptoms may occur, among which jaundice (yellow discolouring of the skin).' },
+  { w: 'hemochromatosis', name: 'Hemochromatosis', alt: ['haemochromatosis'], fr: 'hémochromatose', src: 'p.26', type: 'genetic disorder (esp. in Europe)', d: 'In the latest stage: yellow skin, hepatomegaly, chronic asthenia, joint pain, sometimes diabetes.' },
+  { w: 'kidney failure', name: 'Kidney failure', alt: ['renal failure'], fr: 'insuffisance rénale', src: 'p.26', type: 'structural or functional problem', d: 'High level of urea (nausea, nocturnal urination, weight loss), build-up of phosphate and potassium.' },
+  { w: 'diabetes', name: 'Diabetes', alt: [], fr: 'diabète', src: 'p.26', type: 'metabolic disease (2 types)', d: 'High blood glucose, frequent urination, more thirsty, more hungry, possible vision disorders.' },
+  { w: 'asthma', name: 'Asthma', alt: [], fr: 'asthme', src: 'p.26', type: 'chronic inflammatory disease', d: 'Wheezing, coughing, reversibly narrowed bronchi.' },
+  { w: 'sinusitis', name: 'Sinusitis', alt: [], fr: 'sinusite', src: 'p.27', type: 'viruses, fungi, bacteria or allergy', d: 'Inflammation of the sinuses: pain, swelling, tenderness around the cheeks, eyes and forehead.' },
+  { w: 'meningitis', name: 'Meningitis', alt: [], fr: 'méningite', src: 'p.27', type: 'viruses, bacteria, microorganisms', d: 'Fever, photophobia, headache, neck stiffness, confusion.' },
+  { w: 'angina pectoris', name: 'Angina pectoris', alt: ['angina'], fr: 'angine de poitrine', src: 'p.27', type: 'functional problems', d: 'Discomfort, especially during exertion: pressure, heaviness, tightness, squeezing, burning or choking sensation in the chest.', note: '⚠ « une angine » (gorge) se dit tonsillitis / a sore throat.' }
+];
+
+/* p.27–28 : définitions + traductions des mots en gras */
+var VOC = [
+  { w: 'tiredness', alt: ['fatigue'], fr: 'la fatigue (to be tired = être fatigué)', d: 'The state of being tired (in a medical setting, we often say “fatigue”).', src: 'p.27' },
+  { w: 'build up', alt: ['build-up', 'buildup'], fr: 'accumulation, augmentation', d: 'An increase, an accumulation (e.g. of phosphate and potassium).', src: 'p.27' },
+  { w: 'exertion', alt: [], fr: 'effort (physique)', d: 'Physical effort: angina pectoris causes discomfort especially during ___.', src: 'p.27' },
+  { w: 'temperature', alt: [], fr: 'fièvre (to have a temperature = avoir de la fièvre)', d: 'Another word for “fever”: to have a ___.', src: 'p.27' },
+  { w: 'likelihood', alt: [], fr: 'la probabilité', d: 'The probability that something will happen.', src: 'p.27' },
+  { w: 'contagious', alt: ['catching'], fr: 'contagieux', d: 'Spread from one person or organism to another, typically by direct contact.', src: 'p.27' },
+  { w: 'sneezing', alt: ['sneeze', 'a sneeze'], fr: 'éternuement (to sneeze = éternuer)', d: 'A sudden involuntary expulsion of air from the nose and mouth due to the irritation of the nostrils.', src: 'p.27' },
+  { w: 'coughing', alt: ['cough', 'a cough'], fr: 'la toux (to cough = tousser)', d: 'Expelling air from the lungs with a sudden sharp sound.', src: 'p.27', note: 'Prononciation : /kɒf/.' },
+  { w: 'benign', alt: [], fr: 'bénin', d: '(Of a disease) not harmful or dangerous in effect, contrary to “malignant”.', src: 'p.27' },
+  { w: 'malignant', alt: [], fr: 'malin (une tumeur maligne)', d: '(Of a tumour) dangerous and likely to spread, contrary to “benign”.', src: 'p.27' },
+  { w: 'headache', alt: [], fr: 'mal de tête', d: 'A continuous pain in the head.', src: 'p.27' },
+  { w: 'sweats', alt: ['sweat', 'sweating'], fr: 'sueurs (night sweats = sueurs nocturnes)', d: 'Moisture exuded through the pores of the skin as a reaction to heat, physical exertion, fever or fear.', src: 'p.27', note: 'Prononciation : /swet/.' },
+  { w: 'sore throat', alt: ['a sore throat'], fr: 'mal de gorge', d: 'A condition marked by pain in the throat, typically caused by inflammation due to a cold or other viruses.', src: 'p.28' },
+  { w: 'weakness', alt: [], fr: 'la faiblesse (weak = faible)', d: 'The opposite of strength (weak ≠ strong).', src: 'p.28' },
+  { w: 'stage', alt: [], fr: 'stade (d’une maladie)', d: 'A step or period in the development of a disease.', src: 'p.28' },
+  { w: 'level', alt: [], fr: 'niveau, taux', d: 'The amount of a substance, e.g. a high ___ of urea.', src: 'p.28' },
+  { w: 'chills', alt: ['chill'], fr: 'frissons', d: 'A feeling of cold with shivering, often at the beginning of a fever.', src: 'p.28' },
+  { w: 'thirsty', alt: [], fr: 'assoiffé (to be thirsty = avoir soif) · thirst = la soif', d: 'Feeling the need to drink.', src: 'p.28' },
+  { w: 'heaviness', alt: [], fr: 'lourdeur (heavy = lourd)', d: 'The feeling that something weighs a lot, e.g. in the chest.', src: 'p.28' },
+  { w: 'tightness', alt: [], fr: 'sensation de serrement, de rétrécissement', d: 'The feeling that something is squeezed or narrowed, e.g. in the chest.', src: 'p.28' },
+  { w: 'sputum', alt: ['phlegm'], fr: 'crachats', d: 'Mucus coughed up from the lungs (blood-tinged in tuberculosis).', src: 'p.28' },
+  { w: 'choking', alt: ['to choke'], fr: 'étouffement (to choke = étouffer)', d: 'The feeling of not being able to breathe.', src: 'p.28' },
+  { w: 'swelling', alt: ['to swell'], fr: 'gonflement (to swell = enfler)', d: 'An abnormal increase in the size of a part of the body, e.g. the ankles.', src: 'p.28' },
+  { w: 'narrowed', alt: ['narrow'], fr: 'rétréci (narrow = étroit ≠ wide)', d: 'Made less wide, like the bronchi in asthma.', src: 'p.28' },
+  { w: 'wheezing', alt: ['wheeze'], fr: 'sifflement respiratoire (typique de l’asthmatique)', d: 'A whistling sound when breathing, typical of asthma.', src: 'p.28' },
+  { w: 'shortness of breath', alt: [], fr: 'essoufflement', d: 'Difficulty in breathing, the feeling of being out of breath.', src: 'p.26' },
+  { w: 'jaundice', alt: [], fr: 'jaunisse (ictère)', d: 'A yellow discolouring of the skin.', src: 'p.26' },
+  { w: 'asthenia', alt: [], fr: 'asthénie (grande fatigue)', d: 'Chronic weakness and extreme tiredness.', src: 'p.26' },
+  { w: 'stiffness', alt: [], fr: 'raideur (neck stiffness = raideur de la nuque)', d: 'The state of being hard to move or bend, e.g. the neck in meningitis.', src: 'p.27' },
+  { w: 'weight loss', alt: [], fr: 'perte de poids', d: 'Losing weight without trying, e.g. in tuberculosis.', src: 'p.25' },
+  { w: 'fatal', alt: ['deadly', 'lethal'], fr: 'mortel', d: 'Causing death.', src: 'p.25' }
+];
+
+var BV = [
+  { w: 'pox / smallpox', a: 'V', fr: 'variole', src: 'p.28' }, { w: 'diphtheria', a: 'B', fr: 'diphtérie', src: 'p.28' },
+  { w: 'typhoid fever', a: 'B', fr: 'fièvre typhoïde', src: 'p.28' }, { w: 'plague', a: 'B', fr: 'peste', src: 'p.28' },
+  { w: 'cholera', a: 'B', fr: 'choléra', src: 'p.28' }, { w: 'tuberculosis', a: 'B', fr: 'tuberculose', src: 'p.25' },
+  { w: 'cold', a: 'V', fr: 'rhume', src: 'p.25' }, { w: 'influenza', a: 'V', fr: 'grippe', src: 'p.25' },
+  { w: 'AIDS', a: 'V', fr: 'sida', src: 'p.26' }, { w: 'measles', a: 'V', fr: 'rougeole', src: 'p.29' },
+  { w: 'mumps', a: 'V', fr: 'oreillons', src: 'p.29' }, { w: 'chicken pox', a: 'V', fr: 'varicelle', src: 'p.29' },
+  { w: 'whooping cough', a: 'B', fr: 'coqueluche', src: 'p.29' }, { w: 'polio', a: 'V', fr: 'poliomyélite', src: 'p.29' },
+  { w: 'rubella', a: 'V', fr: 'rubéole', src: 'p.29' }
+];
+
+var EQUIV = [
+  { c: 'measles', s: 'rubeola', fr: 'rougeole', src: 'p.29' },
+  { c: 'mumps', s: 'infectious parotitis', sAlt: ['parotitis'], fr: 'oreillons', src: 'p.29' },
+  { c: 'German measles', s: 'rubella', fr: 'rubéole', src: 'p.29', note: '⚠ rubella = rubéole · rubeola = rougeole (measles).' },
+  { c: 'whooping cough', s: 'pertussis', fr: 'coqueluche', src: 'p.29' },
+  { c: 'chicken pox', cAlt: ['chickenpox'], s: 'varicella', fr: 'varicelle', src: 'p.29' },
+  { c: 'polio', s: 'poliomyelitis', fr: 'poliomyélite', src: 'p.29' },
+  { c: 'flu', cAlt: ['the flu'], s: 'influenza', fr: 'grippe', src: 'p.25' },
+  { c: 'gum', cAlt: ['gums'], s: 'gingiva', sAlt: ['gingivae'], fr: 'gencive', src: 'p.31' },
+  { c: 'canine', s: 'cuspid', fr: 'canine', src: 'p.32' },
+  { c: 'wisdom tooth', cAlt: ['wisdom teeth'], s: 'third molar', sAlt: ['third molars'], fr: 'dent de sagesse', src: 'p.32' },
+  { c: 'lip and cheek lining', s: 'buccal mucosa', fr: 'muqueuse buccale', src: 'p.31' },
+  { c: 'painkillers', cAlt: ['painkiller', 'pain reliever', 'pain relievers'], s: 'antalgics', sAlt: ['antalgic', 'analgesics', 'analgesic'], fr: 'antidouleurs, antalgiques', src: 'p.30' },
+  { c: 'tiredness', s: 'fatigue', fr: 'la fatigue', src: 'p.27', note: 'fatigue = le mot employé en contexte médical.' },
+  { c: 'catching', s: 'contagious', fr: 'contagieux', src: 'p.27' },
+  { c: 'tip of the root', cAlt: ['the tip of the root'], s: 'apex', fr: 'apex (bout de la racine)', src: 'p.34' }
+];
+var EQUIV_BONUS = [
+  { c: 'tooth decay', cAlt: ['dental decay', 'decay'], s: 'dental caries', sAlt: ['caries'], fr: 'carie', src: 'p.35' },
+  { c: 'baby teeth', cAlt: ['milk teeth'], s: 'deciduous teeth', sAlt: ['primary teeth'], fr: 'dents de lait', src: 'p.35' },
+  { c: 'false teeth', s: 'dentures', fr: 'dentier', src: 'p.35' },
+  { c: 'inflammation of the gums', cAlt: ['gum inflammation', 'gum disease'], s: 'gingivitis', fr: 'gingivite', src: 'p.35' },
+  { c: 'tartar', s: 'dental calculus', sAlt: ['calculus'], fr: 'tartre', src: 'bonus' },
+  { c: 'X-ray', cAlt: ['x ray', 'xray'], s: 'radiograph', fr: 'radio(graphie)', src: 'p.35' },
+  { c: 'upper jaw', s: 'maxilla', fr: 'mâchoire supérieure (maxillaire)', src: 'p.32' },
+  { c: 'lower jaw', s: 'mandible', fr: 'mâchoire inférieure (mandibule)', src: 'p.32' },
+  { c: 'tooth socket', s: 'dental alveolus', sAlt: ['alveolus'], fr: 'alvéole dentaire', src: 'bonus' },
+  { c: 'tumour', cAlt: ['tumor', 'growth'], s: 'neoplasm', fr: 'tumeur, néoplasme', src: 'p.25' },
+  { c: 'enlarged liver', s: 'hepatomegaly', fr: 'hépatomégalie', src: 'p.26' },
+  { c: 'extreme tiredness', cAlt: ['weakness', 'tiredness', 'fatigue'], s: 'asthenia', fr: 'asthénie', src: 'p.26' },
+  { c: 'phlegm', s: 'sputum', fr: 'crachats', src: 'p.28' },
+  { c: 'kidney failure', s: 'renal failure', fr: 'insuffisance rénale', src: 'p.26' },
+  { c: 'heart failure', s: 'cardiac failure', fr: 'insuffisance cardiaque', src: 'p.26' },
+  { c: 'smallpox', s: 'variola', fr: 'variole', src: 'p.28' }
+];
+
+/* Pluriels */
+var RULES = [
+  { s: '-sis', p: '-ses', ex: 'analysis → analyses' },
+  { s: '-um', p: '-a', ex: 'bacterium → bacteria' },
+  { s: '-us', p: '-i', ex: 'bronchus → bronchi' },
+  { s: '-a', p: '-ae', ex: 'gingiva → gingivae' },
+  { s: '-on', p: '-a', ex: 'criterion → criteria' },
+  { s: '-ex / -ix', p: '-ices', ex: 'apex → apices' }
+];
+var PLURALS = [
+  { s: 'tooth', p: 'teeth', r: 'irrégulier anglais', src: 'p.31–33' },
+  { s: 'bacterium', p: 'bacteria', r: '-um → -a', src: 'p.25–27' },
+  { s: 'fungus', p: 'fungi', r: '-us → -i', src: 'p.25–27' },
+  { s: 'bronchus', p: 'bronchi', r: '-us → -i', src: 'p.26' },
+  { s: 'gingiva', p: 'gingivae', r: '-a → -ae', src: 'p.31' },
+  { s: 'mucosa', p: 'mucosae', r: '-a → -ae', src: 'p.31' },
+  { s: 'apex', p: 'apices', alt: ['apexes'], r: '-ex → -ices', src: 'p.34' },
+  { s: 'sputum', p: 'sputa', r: '-um → -a', src: 'p.25' },
+  { s: 'virus', p: 'viruses', r: 'piège : -us → -uses', src: 'p.25–28', note: 'Jamais « viri ».' },
+  { s: 'sinus', p: 'sinuses', r: 'piège : -us → -uses', src: 'p.27' }
+];
+var PLURALS_REVIEW = [
+  { s: 'analysis', p: 'analyses', r: '-sis → -ses' }, { s: 'diagnosis', p: 'diagnoses', r: '-sis → -ses' },
+  { s: 'crisis', p: 'crises', r: '-sis → -ses' }, { s: 'prosthesis', p: 'prostheses', r: '-sis → -ses' },
+  { s: 'datum', p: 'data', r: '-um → -a' }, { s: 'atrium', p: 'atria', r: '-um → -a' },
+  { s: 'nucleus', p: 'nuclei', r: '-us → -i' }, { s: 'stimulus', p: 'stimuli', r: '-us → -i' },
+  { s: 'staphylococcus', p: 'staphylococci', r: '-us → -i' }, { s: 'focus', p: 'foci', r: '-us → -i' },
+  { s: 'vertebra', p: 'vertebrae', r: '-a → -ae' }, { s: 'sequela', p: 'sequelae', r: '-a → -ae' },
+  { s: 'criterion', p: 'criteria', r: '-on → -a' }, { s: 'phenomenon', p: 'phenomena', r: '-on → -a' }
+];
+PLURALS_REVIEW.forEach(function (x) { x.src = 'p.20–21'; });
+var PLURALS_BONUS = [
+  { s: 'calculus', p: 'calculi', r: '-us → -i', note: 'dental calculus = le tartre' },
+  { s: 'alveolus', p: 'alveoli', r: '-us → -i', note: 'dental alveolus = l’alvéole dentaire' },
+  { s: 'papilla', p: 'papillae', r: '-a → -ae', note: 'gingival papilla = la papille gingivale' },
+  { s: 'maxilla', p: 'maxillae', r: '-a → -ae', alt: ['maxillas'] },
+  { s: 'foramen', p: 'foramina', r: 'latin : -en → -ina', note: 'apical foramen = l’orifice au bout de la racine' },
+  { s: 'caries', p: 'caries', r: 'invariable', note: 'Même forme au singulier et au pluriel.' },
+  { s: 'index', p: 'indices', alt: ['indexes'], r: '-ex → -ices' },
+  { s: 'appendix', p: 'appendices', alt: ['appendixes'], r: '-ix → -ices' },
+  { s: 'prognosis', p: 'prognoses', r: '-sis → -ses' }, { s: 'metastasis', p: 'metastases', r: '-sis → -ses' },
+  { s: 'bacillus', p: 'bacilli', r: '-us → -i' }, { s: 'serum', p: 'sera', r: '-um → -a' },
+  { s: 'ganglion', p: 'ganglia', r: '-on → -a' }, { s: 'foot', p: 'feet', r: 'irrégulier anglais' }
+];
+PLURALS_BONUS.forEach(function (x) { x.src = 'bonus'; });
+
+/* p.29–30 : médicaments */
+var TF = [
+  { s: 'Not all drugs that can be bought at the chemist’s go through clinical trials.', a: false, why: 'Tous les médicaments passent par des essais cliniques (clinical trials) avant d’être autorisés.', src: 'p.29' },
+  { s: 'Heroin was first considered a recreational drug before being extensively used in hospitals as a pain reliever.', a: false, why: 'C’est l’inverse : l’héroïne a d’abord été un médicament (antidouleur), puis une drogue.', src: 'p.29' },
+  { s: 'When used to treat people, drugs can also be called medication and/or medicine.', a: true, why: 'drug = medication = medicine en contexte médical.', src: 'p.29' },
+  { s: 'In the US, a chemist is someone studying substances at an atomic and molecular level ONLY.', a: true, why: 'Aux USA, chemist = chimiste seulement. Au Royaume-Uni, chemist = aussi pharmacien.', src: 'p.29' },
+  { s: 'Over-the-counter treatment is only sold if a customer has a prescription.', a: false, why: 'Over-the-counter (OTC) = sans ordonnance.', src: 'p.30' },
+  { s: 'You can buy IV that you inject yourself at the pharmacy.', a: false, why: 'L’IV (intravenous, perfusion) est administrée par une infirmière, à l’hôpital.', src: 'p.30' },
+  { s: 'A topical treatment is a type of treatment that is administered locally and not ingested orally.', a: true, why: 'Topique = appliqué localement (crème, pommade, gouttes…).', src: 'p.30' },
+  { s: 'In British English, you buy your medication at the chemist’s.', a: true, why: 'UK : the chemist’s · US : the pharmacy / the drugstore.', src: 'p.29' },
+  { s: 'A prescription-only drug can be bought without seeing a doctor.', a: false, why: 'Prescription-only = sur ordonnance.', src: 'bonus' },
+  { s: 'An antipyretic is a drug that brings down a fever.', a: true, why: 'Antipyretic = antipyrétique (contre la fièvre).', src: 'p.30' },
+  { s: 'Antibiotics are effective against viruses such as the flu.', a: false, why: 'Les antibiotiques agissent sur les bactéries, pas sur les virus.', src: 'p.30' },
+  { s: 'Antihistamines are used to treat allergies.', a: true, why: 'Antihistaminiques = contre les allergies.', src: 'p.30' },
+  { s: 'A lozenge is a liquid medicine that you inject.', a: false, why: 'A lozenge = une pastille que l’on suce (mal de gorge).', src: 'p.30' },
+  { s: 'NSAIDs are non-steroidal anti-inflammatory drugs, such as ibuprofen.', a: true, why: 'NSAIDs = AINS (ibuprofène, aspirine).', src: 'p.30' }
+];
+var FORMS = [
+  { w: 'capsule', fr: 'une gélule', d: 'A small soluble shell that contains a dose of medicine and that you swallow.' },
+  { w: 'cream', fr: 'une crème', d: 'A soft, smooth preparation that you rub into the skin and that is quickly absorbed.' },
+  { w: 'drops', alt: ['eye drops', 'ear drops', 'nose drops'], fr: 'des gouttes', d: 'Liquid medicine given a few at a time, e.g. in the eyes, ears or nose.' },
+  { w: 'inhaler', fr: 'un inhalateur', d: 'A small device used to breathe a medicine into the lungs, e.g. for asthma.' },
+  { w: 'injection', alt: ['shot', 'jab'], fr: 'une injection, une piqûre', d: 'A dose of medicine put into the body with a needle and a syringe.' },
+  { w: 'lozenge', fr: 'une pastille (à sucer)', d: 'A small medicinal sweet that you suck slowly, e.g. for a sore throat.' },
+  { w: 'ointment', fr: 'une pommade', d: 'A greasy preparation that you rub on the skin.' },
+  { w: 'pill', fr: 'une pilule, un cachet', d: 'A small round piece of medicine that you swallow (“the ___” is also a contraceptive).' },
+  { w: 'spray', alt: ['nasal spray'], fr: 'un spray, un pulvérisateur', d: 'Medicine pushed out of a container in tiny drops, e.g. into the nose or the throat.' },
+  { w: 'syrup', fr: 'un sirop', d: 'A thick, sweet liquid medicine, e.g. for a cough.' },
+  { w: 'tablet', fr: 'un comprimé', d: 'A small flat solid piece of compressed medicine that you swallow.' }
+];
+FORMS.forEach(function (x) { x.src = 'p.30'; x.alt = x.alt || []; });
+var TYPES = [
+  { w: 'painkillers', alt: ['painkiller', 'antalgics', 'antalgic', 'analgesics', 'analgesic', 'pain relievers', 'pain reliever'], fr: 'antidouleurs, antalgiques', d: 'Drugs that relieve pain.' },
+  { w: 'anticoagulants', alt: ['anticoagulant', 'blood thinners'], fr: 'anticoagulants', d: 'Drugs that prevent the blood from clotting.' },
+  { w: 'antipyretics', alt: ['antipyretic'], fr: 'antipyrétiques', d: 'Drugs that bring down a fever.' },
+  { w: 'antibiotics', alt: ['antibiotic'], fr: 'antibiotiques', d: 'Drugs that kill bacteria or stop them from growing.' },
+  { w: 'anti-inflammatory drugs', alt: ['anti-inflammatories', 'anti-inflammatory', 'antiinflammatory drugs', 'nsaids'], fr: 'anti-inflammatoires (AINS / corticoïdes)', d: 'Drugs that reduce inflammation, like NSAIDs (ibuprofen) or steroids.' },
+  { w: 'antihistamines', alt: ['antihistamine'], fr: 'antihistaminiques', d: 'Drugs used to treat allergies.' },
+  { w: 'antidepressants', alt: ['antidepressant'], fr: 'antidépresseurs', d: 'Drugs used to treat depression.' },
+  { w: 'antipsychotics', alt: ['antipsychotic', 'neuroleptics'], fr: 'antipsychotiques (neuroleptiques)', d: 'Drugs used to treat psychosis, e.g. schizophrenia.' },
+  { w: 'tranquilizers', alt: ['tranquilizer', 'tranquillizers', 'tranquillisers', 'tranquilisers', 'sedatives'], fr: 'tranquillisants, anxiolytiques', d: 'Drugs that calm you down and reduce anxiety.' }
+];
+TYPES.forEach(function (x) { x.src = 'p.30'; });
+var DRUGVOC = [
+  { en: 'clinical trials', fr: 'des essais cliniques', src: 'p.29' },
+  { en: 'a pain reliever', alt: ['painkiller', 'pain killer'], fr: 'un antidouleur', src: 'p.29' },
+  { en: 'a drug', alt: ['medication', 'medicine'], fr: 'un médicament', src: 'p.29', note: 'drug = medication = medicine (drug veut aussi dire « drogue »).' },
+  { en: 'the chemist’s', alt: ["chemist's", 'chemists', 'pharmacy', 'drugstore'], fr: 'la pharmacie (UK)', src: 'p.29', note: 'US : the pharmacy / the drugstore.' },
+  { en: 'a pharmacist', alt: ['chemist'], fr: 'un pharmacien', src: 'p.29', note: 'UK : chemist = pharmacien aussi · US : chemist = chimiste seulement.' },
+  { en: 'a prescription', fr: 'une ordonnance', src: 'p.30' },
+  { en: 'over-the-counter', alt: ['otc', 'over the counter'], fr: 'sans ordonnance', src: 'p.30', note: 'Abréviation : OTC.' },
+  { en: 'prescription-only', alt: ['prescription only', 'on prescription'], fr: 'sur ordonnance', src: 'p.29' },
+  { en: 'a side effect', alt: ['side-effect'], fr: 'un effet secondaire', src: 'p.29' },
+  { en: 'the dosage', fr: 'la posologie', src: 'p.29' },
+  { en: 'a refill', fr: 'un renouvellement (d’ordonnance)', src: 'p.29' },
+  { en: 'intravenous (IV)', alt: ['intravenous', 'iv', 'intravenously'], fr: 'par intraveineuse (perfusion)', src: 'p.30' },
+  { en: 'a topical treatment', fr: 'un traitement local (topique)', src: 'p.30' },
+  { en: 'administered locally', alt: ['to be administered locally'], fr: 'administré localement', src: 'p.30' },
+  { en: 'ingested orally', alt: ['taken orally', 'orally', 'by mouth'], fr: 'avalé, pris par voie orale', src: 'p.30' },
+  { en: 'a recreational drug', fr: 'une drogue', src: 'p.29' },
+  { en: 'allopathic medicine', fr: 'la médecine allopathique (classique)', src: 'p.30' }
+];
+
+/* p.31–34 : bouche, dents, anatomie de la dent */
+var ORAL = [
+  { w: 'lip', fr: 'lèvre', src: 'p.31' },
+  { w: 'teeth', alt: ['tooth'], fr: 'dents', src: 'p.31' },
+  { w: 'hard palate', fr: 'palais dur', d: 'The bony front part of the roof of the mouth.', src: 'p.31' },
+  { w: 'soft palate', fr: 'voile du palais (palais mou)', d: 'The soft back part of the roof of the mouth.', src: 'p.31' },
+  { w: 'retromolar trigone', fr: 'trigone rétromolaire', d: 'The small triangular area just behind the last lower molars.', src: 'p.31' },
+  { w: 'tongue', fr: 'langue', src: 'p.31' },
+  { w: 'gingiva', alt: ['gum', 'gums'], fr: 'gencive', src: 'p.31' },
+  { w: 'uvula', fr: 'luette', src: 'p.31' },
+  { w: 'tonsil', alt: ['tonsils'], fr: 'amygdale', d: 'One of the two small masses of tissue on each side of the back of the throat.', src: 'p.31' },
+  { w: 'buccal mucosa', fr: 'muqueuse buccale', d: 'The lip and cheek lining.', src: 'p.31' },
+  { w: 'floor of the mouth', alt: ['floor of mouth'], fr: 'plancher buccal', d: 'The area under the tongue.', src: 'p.31' },
+  { w: 'central incisor', fr: 'incisive centrale', src: 'p.32' },
+  { w: 'lateral incisor', fr: 'incisive latérale', src: 'p.32' },
+  { w: 'canine', alt: ['cuspid'], fr: 'canine', src: 'p.32', note: 'Synonyme : cuspid.' },
+  { w: 'first premolar', fr: 'première prémolaire', src: 'p.32' },
+  { w: 'second premolar', fr: 'deuxième prémolaire', src: 'p.32' },
+  { w: 'first molar', fr: 'première molaire', src: 'p.32' },
+  { w: 'second molar', fr: 'deuxième molaire', src: 'p.32' },
+  { w: 'wisdom tooth', alt: ['third molar'], fr: 'dent de sagesse (troisième molaire)', src: 'p.32' },
+  { w: 'upper jaw', alt: ['maxilla'], fr: 'mâchoire supérieure', src: 'p.32' },
+  { w: 'lower jaw', alt: ['mandible'], fr: 'mâchoire inférieure', src: 'p.32' },
+  { w: 'to erupt', alt: ['erupt'], fr: 'percer, sortir de la gencive (pour une dent)', d: 'The verb used to describe teeth coming out of the gums.', src: 'p.32' },
+  { w: 'eruption', fr: 'l’éruption (dentaire)', d: 'The noun for teeth coming out of the gums.', src: 'p.32' },
+  { w: 'crown', fr: 'couronne', d: 'The part of the tooth above the gum, covered with enamel.', src: 'p.34' },
+  { w: 'root', fr: 'racine', d: 'The part of the tooth under the gum.', src: 'p.34' },
+  { w: 'enamel', fr: 'émail', d: 'The hard outer layer of a tooth.', src: 'p.34' },
+  { w: 'dentin', alt: ['dentine'], fr: 'dentine', d: 'The hard layer under the enamel, around the pulp.', src: 'p.34' },
+  { w: 'pulp', fr: 'pulpe', d: 'The soft centre of the tooth, with the nerve and blood vessels.', src: 'p.34' },
+  { w: 'cementum', fr: 'cément', d: 'The layer that covers the root of the tooth.', src: 'p.34' },
+  { w: 'blood vessels', alt: ['blood vessel'], fr: 'vaisseaux sanguins', src: 'p.34' },
+  { w: 'periodontal ligament', fr: 'ligament parodontal (desmodonte)', d: 'The fibres that hold the root of the tooth in the bone.', src: 'p.34' },
+  { w: 'lateral canals', alt: ['lateral canal', 'accessory canals'], fr: 'canaux latéraux (accessoires)', src: 'p.34' },
+  { w: 'nerve', fr: 'nerf', src: 'p.34' },
+  { w: 'apex', fr: 'apex (bout de la racine)', d: 'The tip of the root.', src: 'p.34' }
+];
+ORAL.forEach(function (x) { x.alt = x.alt || []; });
+
+/* p.33 : appariement du poly (corrigé) */
+var MATCH33 = [
+  { n: 1, w: 'incisor', l: 'h', d: 'Front tooth used for cutting', fr: 'incisive' },
+  { n: 2, w: 'canine', l: 'e', d: 'Pointed tooth used for tearing', fr: 'canine', alt: ['cuspid'] },
+  { n: 3, w: 'premolar', l: 'i', d: 'Tooth used for grinding and tearing', fr: 'prémolaire' },
+  { n: 4, w: 'molar', l: 'g', d: 'Tooth at the back, used for grinding', fr: 'molaire' },
+  { n: 5, w: 'gums', l: 'd', d: 'Soft tissue around the teeth', fr: 'gencives', alt: ['gum', 'gingiva'] },
+  { n: 6, w: 'palate', l: 'b', d: 'Roof of the mouth', fr: 'palais' },
+  { n: 7, w: 'tongue', l: 'c', d: 'Muscle in the mouth for tasting, speaking', fr: 'langue' },
+  { n: 8, w: 'uvula', l: 'f', d: 'Small structure at the back of the throat', fr: 'luette' },
+  { n: 9, w: 'enamel', l: 'j', d: 'Hard outer layer of a tooth', fr: 'émail' },
+  { n: 10, w: 'root', l: 'a', d: 'Part of the tooth under the gum', fr: 'racine' }
+];
+MATCH33.forEach(function (x) { x.alt = x.alt || []; x.src = 'p.33'; });
+
+/* p.35 : vocabulaire dentaire A–V (les définitions sont données à l’oral en cours : celles-ci sont des définitions types) */
+var DENTVOC = [
+  { k: 'A', w: 'toothbrush', fr: 'brosse à dents', d: 'A small brush with a long handle that you use to clean your teeth.' },
+  { k: 'B', w: 'X-ray', alt: ['x ray', 'xray', 'radiograph'], fr: 'radio(graphie)', d: 'A picture of the inside of the body (teeth, bones) made with radiation.' },
+  { k: 'C', w: 'filling', alt: ['amalgam', 'filling/amalgam'], fr: 'plombage, obturation (amalgame)', d: 'Material put into a tooth to fill a cavity once the decay has been removed.' },
+  { k: 'D', w: 'dental drill', alt: ['drill'], fr: 'fraise, roulette (du dentiste)', d: 'A fast-rotating instrument used to remove decay and shape a tooth.' },
+  { k: 'E', w: 'periodontal probe', alt: ['probe'], fr: 'sonde parodontale', d: 'A thin graduated instrument used to measure the depth of the pockets around the teeth.' },
+  { k: 'F', w: 'gingivitis', fr: 'gingivite', d: 'Inflammation of the gums.' },
+  { k: 'G', w: 'abscess', fr: 'abcès', d: 'A painful collection of pus caused by a bacterial infection.' },
+  { k: 'H', w: 'dental practice', alt: ['dental surgery', 'dental office', 'dentist’s surgery'], fr: 'cabinet dentaire', d: 'The place where a dentist works and sees patients.' },
+  { k: 'I', w: 'dentures', alt: ['denture', 'false teeth'], fr: 'dentier, prothèse amovible', d: 'A set of removable false teeth.' },
+  { k: 'J', w: 'mirror', alt: ['dental mirror', 'mouth mirror'], fr: 'miroir (buccal)', d: 'A small instrument that lets the dentist see the hidden sides of the teeth.' },
+  { k: 'K', w: 'toothache', fr: 'mal de dents', d: 'A pain in a tooth.' },
+  { k: 'L', w: 'scaling', fr: 'détartrage', d: 'Removing tartar (calculus) from the surface of the teeth.' },
+  { k: 'M', w: 'necrosis', fr: 'nécrose', d: 'The death of cells or tissue, e.g. of the pulp.' },
+  { k: 'N', w: 'mouthwash', alt: ['mouth wash', 'mouthrinse', 'mouth rinse'], fr: 'bain de bouche', d: 'An antiseptic liquid used to rinse the mouth.' },
+  { k: 'O', w: 'dental floss', alt: ['floss'], fr: 'fil dentaire', d: 'A thin thread used to clean between the teeth.' },
+  { k: 'P', w: 'toothpaste', fr: 'dentifrice', d: 'A paste that you put on your toothbrush to clean your teeth.' },
+  { k: 'Q', w: 'dental decay', alt: ['tooth decay', 'decay', 'caries', 'dental caries'], fr: 'carie', d: 'The destruction of a tooth by bacteria, which produces cavities.' },
+  { k: 'R', w: 'braces', alt: ['brace'], fr: 'appareil dentaire (bagues)', d: 'A device fixed to the teeth to straighten them.' },
+  { k: 'S', w: 'baby teeth', alt: ['milk teeth', 'primary teeth', 'deciduous teeth'], fr: 'dents de lait', d: 'The first set of 20 teeth that children have.' },
+  { k: 'T', w: 'crown', fr: 'couronne', d: 'An artificial cap that covers a damaged tooth (also: the visible part of a tooth).' },
+  { k: 'U', w: 'pulpitis', fr: 'pulpite', d: 'Inflammation of the pulp, which causes a very painful toothache.' },
+  { k: 'V', w: 'root canal', alt: ['root canal treatment'], fr: 'canal radiculaire · traitement de canal (dévitalisation)', d: 'The canal inside the root that contains the pulp; also the treatment that removes infected pulp.' }
+];
+DENTVOC.forEach(function (x) { x.alt = x.alt || []; x.src = 'p.35'; });
+
+/* =========================================================
+   2 bis. GRAMMAIRE · Point 4 THE MODALS · Point 5 LES INTERROGATIFS
+   ========================================================= */
+/* Probabilité : MUST / MAY / MIGHT (poly p.92 + phrases en plus) */
+var MOD_PROB = [
+  { s: 'The patient has a swollen gum and a fever. He ___ have an abscess.', h: 'quasi certain', a: 'MUST', why: 'Indices forts (gencive gonflée + fièvre) : déduction sûre → MUST.', src: 'p.92' },
+  { s: 'This X-ray shows a dark spot near the root. It ___ be a cavity or just a shadow.', h: 'faible probabilité', a: 'MIGHT', acc: ['MAY'], why: '« … or just a shadow » : simple possibilité → MIGHT (MAY se dit aussi).', src: 'p.92' },
+  { s: 'She’s not responding to the antibiotics. The infection ___ be resistant.', h: 'faible degré de certitude', a: 'MIGHT', why: 'Faible degré de certitude → MIGHT.', src: 'p.92' },
+  { s: 'If he feels dizzy after the extraction, it ___ be due to low blood pressure.', h: 'peut-être que oui, peut-être que non', a: 'MAY', why: '50 / 50 → MAY.', src: 'p.92' },
+  { s: 'He hasn’t complained about any pain. It ___ not be serious.', h: 'c’est sûrement pas sérieux', a: 'MUST', why: 'Sûrement pas → MUST NOT (en anglais britannique on dit aussi : it can’t be serious).', src: 'p.92' },
+  { s: 'Given the advanced stage of decay, this tooth ___ need to be extracted.', h: 'c’est sûr', a: 'MUST', why: 'Carie très avancée : quasi certain → MUST.', src: 'p.92' },
+  { s: 'Her gums bleed every time she brushes her teeth. She ___ have gingivitis.', h: 'c’est sûrement ça', a: 'MUST', why: 'Saignement à chaque brossage : déduction sûre → MUST.' },
+  { s: 'I’m not sure, but the pain ___ come from a wisdom tooth.', h: 'peut-être (50 / 50)', a: 'MAY', why: 'Possibilité moyenne → MAY.' },
+  { s: 'He has a very slight cough. It ___ be the beginning of a cold, but I doubt it.', h: 'faible probabilité', a: 'MIGHT', why: '« I doubt it » : faible possibilité → MIGHT.' },
+  { s: 'The patient is shivering and has a high temperature. She ___ have the flu.', h: 'c’est sûrement ça', a: 'MUST', why: 'Frissons + forte fièvre : déduction sûre → MUST.' },
+  { s: 'The dentist isn’t answering the phone. He ___ be with a patient.', h: 'sûrement', a: 'MUST', why: 'Déduction logique → MUST.' },
+  { s: 'Take your umbrella: it ___ rain this afternoon, but the sky is quite blue.', h: 'faible probabilité', a: 'MIGHT', why: 'Le ciel est bleu : faible possibilité → MIGHT.' },
+  { s: 'He’s never late. He ___ have forgotten his appointment.', h: 'sûrement, au passé', a: 'MUST', why: 'Déduction sur le passé : MUST + HAVE + participe passé.' },
+  { s: 'I’m not sure where she is. She ___ have gone home early.', h: 'peut-être (50 / 50), au passé', a: 'MAY', acc: ['MIGHT'], why: 'Possibilité sur le passé : MAY (ou MIGHT) + HAVE + participe passé.' }
+];
+
+/* QCM : capacité, permission, obligation, conseil (poly p.94–95 + phrases en plus) */
+var MOD_MCQ = [
+  { s: 'If the patient is nervous, you ___ explain each step calmly.', o: ['must', 'should', 'can'], a: 'should', why: 'Conseil → SHOULD.', src: 'p.94' },
+  { s: 'Dentists ___ diagnose oral diseases.', o: ['can', 'have to', 'could'], a: 'can', why: 'Capacité, au présent → CAN.', src: 'p.94' },
+  { s: 'We ___ take an impression if we plan a prosthesis.', o: ['must', 'might', 'ought to'], a: 'must', why: 'Nécessité → MUST.', src: 'p.94' },
+  { s: 'After surgery, patients ___ be monitored closely.', o: ['should', 'can', 'could'], a: 'should', why: 'Recommandation → SHOULD.', src: 'p.94' },
+  { s: 'You ___ eat for at least two hours after this procedure.', o: ['don’t have to', 'must not', 'could not'], a: 'must not', why: 'Interdiction → MUST NOT. (don’t have to = tu n’es pas obligé)', src: 'p.94' },
+  { s: 'If she continues to feel pain, we ___ take another X-ray.', o: ['may', 'have to', 'ought'], a: 'may', why: 'Possibilité → MAY. (« have to » demanderait « will have to », « ought » demande « to ».)', src: 'p.94' },
+  { s: 'The assistant ___ prepare the tray before the patient arrives.', o: ['should', 'could', 'must not'], a: 'should', why: 'Bonne pratique, conseil → SHOULD.', src: 'p.95' },
+  { s: 'You ___ ignore early signs of gum disease.', o: ['mustn’t', 'shouldn’t', 'both a and b are correct'], a: 'both a and b are correct', why: 'mustn’t (interdiction) et shouldn’t (conseil) sont corrects tous les deux.', src: 'p.95' },
+  { s: 'In the past, they ___ use silver amalgam more often.', o: ['can', 'could', 'must'], a: 'could', why: 'Capacité, possibilité dans le passé → COULD.', src: 'p.95' },
+  { s: 'Students ___ attend hygiene and sterilization courses regularly.', o: ['must', 'should', 'can'], a: 'must', why: 'Obligation (règle de la formation) → MUST. « should » (conseil) serait aussi défendable.', src: 'p.95' },
+  { s: '___ I come in? — Yes, of course.', o: ['May', 'Must', 'Should'], a: 'May', why: 'Demander la permission poliment → MAY (ou can, could).' },
+  { s: 'You ___ come tomorrow: your appointment is cancelled.', o: ['mustn’t', 'don’t have to', 'can’t'], a: 'don’t have to', why: 'Pas obligé → DON’T HAVE TO. (mustn’t = c’est interdit)' },
+  { s: 'You ___ smoke in the clinic. It’s forbidden.', o: ['mustn’t', 'don’t have to', 'might not'], a: 'mustn’t', why: 'Interdiction → MUSTN’T.' },
+  { s: 'When I was five, I ___ already swim.', o: ['can', 'could', 'must'], a: 'could', why: 'Capacité dans le passé → COULD.' },
+  { s: 'After the operation, you ___ eat normally in a few days.', o: ['will can', 'will be able to', 'could'], a: 'will be able to', why: 'CAN n’a pas de futur → WILL BE ABLE TO.' },
+  { s: 'Yesterday, the dentist ___ extract the tooth because it was infected.', o: ['must', 'had to', 'should'], a: 'had to', why: 'Obligation dans le passé → HAD TO (must n’a pas de passé).' },
+  { s: 'You ___ brushed your teeth before going to bed!', o: ['should have', 'must', 'ought'], a: 'should have', why: 'Reproche sur le passé → SHOULD HAVE + participe passé.' },
+  { s: '___ you open your mouth a little wider, please?', o: ['Could', 'Must', 'Should'], a: 'Could', why: 'Demande polie → COULD (ou can).' }
+];
+
+/* À écrire : obligation, conseil, capacité (poly p.93 exercice 1 + phrases en plus) */
+var MOD_FILL = [
+  { s: 'You ___ wear gloves during every procedure.', h: 'obligation', a: 'must', acc: ['have to'], src: 'p.93' },
+  { s: 'Before anesthesia, you ___ check for any known allergies.', h: 'obligation', a: 'must', acc: ['have to'], src: 'p.93' },
+  { s: 'If the infection spreads, we ___ extract the tooth.', h: 'obligation au futur', a: 'will have to', acc: ['’ll have to'], src: 'p.93', why: 'MUST n’a pas de futur → WILL HAVE TO.' },
+  { s: 'The patient ___ be more careful with oral hygiene.', h: 'conseil', a: 'should', acc: ['ought to'], src: 'p.93' },
+  { s: 'As this case was complex, we ___ refer him to a specialist.', h: 'conseil', a: 'should', acc: ['ought to'], src: 'p.93' },
+  { s: 'After surgery, the patient ___ avoid hard foods.', h: 'obligation', a: 'must', acc: ['has to'], src: 'p.93' },
+  { s: 'We ___ try a root canal before extraction.', h: 'conseil', a: 'should', acc: ['ought to'], src: 'p.93' },
+  { s: 'During your internship, you ___ be on time every day.', h: 'obligation', a: 'must', acc: ['have to'], src: 'p.93' },
+  { s: 'You ___ not ignore a patient’s persistent bleeding.', h: 'obligation', a: 'must', src: 'p.93', why: 'MUST NOT = interdiction.' },
+  { s: 'She ___ open her mouth wider so we can proceed.', h: 'obligation, 3e personne', a: 'has to', acc: ['must'], src: 'p.93', why: 'HAVE TO se conjugue : she HAS to.' },
+  { s: 'You ___ come if you don’t want to.', h: 'pas obligé', a: 'don’t have to', acc: ['do not have to', 'needn’t', 'need not'], why: 'Absence d’obligation → DON’T HAVE TO.' },
+  { s: 'You ___ drink alcohol with these antibiotics.', h: 'interdit', a: 'mustn’t', acc: ['must not'], why: 'Interdiction → MUSTN’T.' },
+  { s: 'She ___ speak English and Spanish.', h: 'capacité', a: 'can', why: 'Savoir faire → CAN.' },
+  { s: 'Last year, I ___ go to the dentist every month.', h: 'obligation au passé', a: 'had to', why: 'Obligation passée → HAD TO.' },
+  { s: 'You ___ see a dentist about that toothache.', h: 'conseil', a: 'should', acc: ['ought to'] },
+  { s: 'Next year, you ___ treat patients on your own.', h: 'capacité au futur', a: 'will be able to', acc: ['’ll be able to'], why: 'CAN n’a pas de futur → WILL BE ABLE TO.' }
+];
+
+/* Reformuler avec un modal (poly p.93 exercice 2, p.94 exercice 2 + phrases en plus) */
+var MOD_REPH = [
+  { q: 'I think the tooth is infected.', lead: 'The tooth…', model: ['The tooth may be infected.', 'The tooth might be infected.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['be infected', 'be infected']], why: '« I think » = probable, pas sûr → MAY / MIGHT + base verbale.', src: 'p.93' },
+  { q: 'It’s possible she has never had braces.', lead: 'She…', model: ['She may never have had braces.', 'She might never have had braces.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['have had (passé)', 'have had']], why: 'Possibilité sur le passé → MAY / MIGHT + HAVE + participe passé.', src: 'p.93' },
+  { q: 'I’m certain this is a case of bruxism.', lead: 'This…', model: ['This must be a case of bruxism.'], keys: [['must be', 'must be']], why: 'Certitude → MUST + base verbale.', src: 'p.93' },
+  { q: 'Maybe the jaw pain is linked to stress.', lead: 'The jaw pain…', model: ['The jaw pain may be linked to stress.', 'The jaw pain might be linked to stress.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['be linked', 'be linked']], why: 'Maybe → MAY / MIGHT + base verbale.', src: 'p.93' },
+  { q: 'It’s highly unlikely that he flosses daily.', lead: 'He…', model: ['He must not floss daily.', 'He can’t floss daily.', 'Accepté aussi : He might floss daily.'], keys: [['must not / can’t / might', "must not|mustn't|can't|cannot|\\bmight\\b"], ['floss (base verbale, sans -es)', '\\bfloss\\b']], why: 'Très peu probable = il ne passe sûrement pas le fil → MUST NOT (ou CAN’T). Avec MIGHT, on garde une faible possibilité.', src: 'p.93' },
+  { q: 'It is necessary to sterilize all instruments.', lead: 'You…', model: ['You must sterilize all instruments.', 'You have to sterilize all instruments.'], keys: [['must / have to', '\\bmust\\b|have to'], ['sterilize', 'sterili[sz]e']], why: 'Nécessaire → MUST (ou HAVE TO).', src: 'p.94' },
+  { q: 'It’s possible he had a reaction to the anesthetic.', lead: 'He…', model: ['He may have had a reaction to the anesthetic.', 'He might have had a reaction to the anesthetic.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['have had', 'have had']], why: 'Possibilité sur le passé → MAY / MIGHT + HAVE + participe passé.', src: 'p.94' },
+  { q: 'It’s forbidden to reuse single-use tools.', lead: 'You…', model: ['You must not reuse single-use tools.', 'You mustn’t reuse single-use tools.'], keys: [['must not', "must not|mustn't"], ['pas « don’t have to »', "don't have to|do not have to", true]], why: 'Interdit → MUST NOT.', src: 'p.94' },
+  { q: 'It’s a good idea to advise the patient to rinse with saltwater.', lead: 'You…', model: ['You should advise the patient to rinse with saltwater.'], keys: [['should / ought to', '\\bshould\\b|ought to'], ['advise', 'advise']], why: 'Bonne idée = conseil → SHOULD.', src: 'p.94' },
+  { q: 'It’s your duty to inform the patient of all risks.', lead: 'You…', model: ['You must inform the patient of all risks.'], keys: [['must / have to', '\\bmust\\b|have to'], ['inform', 'inform']], why: 'Devoir professionnel = obligation → MUST.', src: 'p.94' },
+  { q: 'I’m sure he forgot his appointment.', lead: 'He…', model: ['He must have forgotten his appointment.'], keys: [['must have', 'must have'], ['forgotten (participe passé)', 'forgotten']], why: 'Certitude sur le passé → MUST HAVE + participe passé.' },
+  { q: 'It isn’t necessary to take an X-ray today.', lead: 'You…', model: ['You don’t have to take an X-ray today.', 'You needn’t take an X-ray today.'], keys: [["don't have to / needn't", "don't have to|do not have to|needn't|need not"], ["pas « mustn't »", "must not|mustn't", true]], why: 'Pas nécessaire → DON’T HAVE TO (mustn’t = interdit !).' },
+  { q: 'It was a mistake not to see a dentist earlier.', lead: 'You…', model: ['You should have seen a dentist earlier.'], keys: [['should have', 'should have'], ['seen (participe passé)', '\\bseen\\b']], why: 'Reproche sur le passé → SHOULD HAVE + participe passé.' },
+  { q: 'Perhaps the patient is allergic to penicillin.', lead: 'The patient…', model: ['The patient may be allergic to penicillin.', 'The patient might be allergic to penicillin.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['be allergic', 'be allergic']], why: 'Perhaps → MAY / MIGHT + base verbale.' }
+];
+
+/* Traductions FR → EN (auto-évaluées avec points clés) */
+var TRANS = [
+  { g: 'mod', fr: 'Vous devez porter des gants pendant chaque soin.', model: ['You must wear gloves during every procedure.', 'You have to wear gloves during each treatment.'], keys: [['must / have to', '\\bmust\\b|have to'], ['wear gloves', 'wear gloves']], why: 'Obligation → MUST (ou HAVE TO) + base verbale.' },
+  { g: 'mod', fr: 'Il a dû oublier son rendez-vous.', model: ['He must have forgotten his appointment.'], keys: [['must have', 'must have'], ['forgotten', 'forgotten'], ['appointment', 'appointment']], why: '« a dû » = déduction sur le passé → MUST HAVE + participe passé.' },
+  { g: 'mod', fr: 'Il se peut que la dent soit infectée.', model: ['The tooth may be infected.', 'The tooth might be infected.'], keys: [['may / might', '\\bmay\\b|\\bmight\\b'], ['be infected', 'be infected']], why: 'Il se peut que → MAY / MIGHT + base verbale.' },
+  { g: 'mod', fr: 'Tu n’es pas obligé de venir demain.', model: ['You don’t have to come tomorrow.'], keys: [["don't have to", "don't have to|do not have to|needn't|need not"], ["pas « mustn't »", "must not|mustn't", true]], why: 'Pas obligé → DON’T HAVE TO.' },
+  { g: 'mod', fr: 'Il est interdit de manger pendant deux heures.', model: ['You must not eat for two hours.', 'You mustn’t eat for two hours.'], keys: [['must not', "must not|mustn't|cannot|can't"], ['for two hours', 'for two hours']], why: 'Interdit → MUST NOT ; pendant + durée → FOR.' },
+  { g: 'mod', fr: 'Vous devriez vous brosser les dents deux fois par jour.', model: ['You should brush your teeth twice a day.'], keys: [['should / ought to', '\\bshould\\b|ought to'], ['brush your teeth', 'brush your teeth'], ['twice a day', 'twice a day']], why: 'Conseil → SHOULD ; deux fois par jour = twice a day.' },
+  { g: 'mod', fr: 'Tu aurais dû appeler le dentiste.', model: ['You should have called the dentist.'], keys: [['should have', 'should have'], ['called (participe passé)', 'called|phoned|rung']], why: 'Reproche sur le passé → SHOULD HAVE + participe passé.' },
+  { g: 'mod', fr: 'Elle sait parler anglais.', model: ['She can speak English.'], keys: [['can speak (sans to, sans -s)', 'can speak']], why: 'Savoir faire = capacité → CAN + base verbale.' },
+  { g: 'mod', fr: 'Pourriez-vous ouvrir la bouche, s’il vous plaît ?', model: ['Could you open your mouth, please?'], keys: [['could you', 'could you|can you'], ['open your mouth', 'open your mouth']], why: 'Demande polie → COULD you… ?' },
+  { g: 'mod', fr: 'Nous devrons extraire la dent.', model: ['We will have to extract the tooth.', 'We’ll have to pull the tooth out.'], keys: [['will have to', "will have to|'ll have to"], ['pas « will must »', 'will must', true]], why: 'MUST n’a pas de futur → WILL HAVE TO.' },
+  { g: 'mod', fr: 'Je pourrai venir demain.', model: ['I will be able to come tomorrow.'], keys: [['will be able to', "will be able to|'ll be able to"], ['pas « will can »', 'will can', true]], why: 'CAN n’a pas de futur → WILL BE ABLE TO.' },
+  { g: 'mod', fr: 'Il doit être malade (c’est sûrement ça).', model: ['He must be ill.', 'He must be sick.'], keys: [['must be', 'must be'], ['ill / sick', '\\bill\\b|\\bsick\\b']], why: 'Déduction → MUST + base verbale.' },
+  { g: 'qw', fr: 'À qui parles-tu ?', model: ['Who are you talking to?'], keys: [['Who…', '^\\W*who\\b'], ['to à la fin', '\\bto\\W*$'], ['pas « To who… »', '^\\W*to who', true]], why: 'La préposition va à la fin : Who … TO?' },
+  { g: 'qw', fr: 'De quoi parle ce livre ?', model: ['What is this book about?'], keys: [['What…', '^\\W*what\\b'], ['about à la fin', '\\babout\\W*$']], why: 'WHAT … ABOUT? : préposition à la fin.' },
+  { g: 'qw', fr: 'À quoi penses-tu ?', model: ['What are you thinking of?', 'What are you thinking about?'], keys: [['What…', '^\\W*what\\b'], ['are you thinking', 'are you thinking'], ['of / about à la fin', '\\b(of|about)\\W*$']], why: 'WHAT … OF / ABOUT? (préposition à la fin).' },
+  { g: 'qw', fr: 'Depuis combien de temps avez-vous mal ?', model: ['How long have you been in pain?', 'How long have you had this pain?'], keys: [['How long', 'how long'], ['have you (present perfect)', 'have you']], why: 'Durée → HOW LONG + present perfect.' },
+  { g: 'qw', fr: 'À quelle fréquence vous brossez-vous les dents ?', model: ['How often do you brush your teeth?'], keys: [['How often', 'how often'], ['do you brush', 'do you brush'], ['teeth', '\\bteeth\\b']], why: 'Fréquence → HOW OFTEN + do you… ?' },
+  { g: 'qw', fr: 'Combien de dents a un adulte ?', model: ['How many teeth does an adult have?'], keys: [['How many', 'how many'], ['teeth', '\\bteeth\\b'], ['does … have', '\\bdoes\\b']], why: 'teeth = dénombrable → HOW MANY ; 3e personne → does.' },
+  { g: 'qw', fr: 'Combien de sucre mangez-vous par jour ?', model: ['How much sugar do you eat a day?', 'How much sugar do you eat per day?'], keys: [['How much', 'how much'], ['sugar', 'sugar'], ['do you eat', 'do you eat']], why: 'sugar = indénombrable → HOW MUCH.' },
+  { g: 'qw', fr: 'À qui est cette radio ?', model: ['Whose X-ray is this?', 'Whose X-ray is it?'], keys: [['Whose', '\\bwhose\\b'], ['pas « Who’s »', "who's|who is", true]], why: 'Possession → WHOSE + nom (who’s = who is).' },
+  { g: 'qw', fr: 'Quelle dent vous fait le plus mal ?', model: ['Which tooth hurts the most?', 'Which tooth is the most painful?'], keys: [['Which', '\\bwhich\\b'], ['tooth (singulier)', '\\btooth\\b']], why: 'Choix parmi les dents → WHICH.' },
+  { g: 'qw', fr: 'Pourquoi êtes-vous si nerveux ?', model: ['Why are you so nervous?'], keys: [['Why', '\\bwhy\\b'], ['are you', 'are you']], why: 'La cause → WHY.' },
+  { g: 'qw', fr: 'Où avez-vous mal ?', model: ['Where does it hurt?', 'Where do you have pain?'], keys: [['Where', '\\bwhere\\b'], ['does it hurt / do you have', 'does it hurt|do you have|are you in pain']], why: 'Lieu → WHERE ; « avoir mal » = it hurts.' },
+  { g: 'qw', fr: 'Tu mesures combien ?', model: ['How tall are you?'], keys: [['How tall', 'how tall'], ['are you', 'are you']], why: 'HOW + adjectif = combien, à quel point.' },
+  { g: 'qw', fr: 'D’où venez-vous ?', model: ['Where do you come from?', 'Where are you from?'], keys: [['Where', '\\bwhere\\b'], ['from à la fin', '\\bfrom\\W*$']], why: 'Préposition à la fin : Where … FROM?' },
+  { g: 'qw', fr: 'Pour quoi faire ?', model: ['What for?'], keys: [['What … for', 'what.*\\bfor\\b']], why: 'Le but → WHAT FOR? (= pour quoi faire).' }
+];
+
+/* Interrogatifs : le tableau du poly (p.84–85) */
+var QW = [
+  { w: 'WHAT', fr: 'que, quoi, qu’est-ce que ; + nom = quel(le)', ex: 'What do you want? · What time is it?', exfr: 'Que veux-tu ? · Quelle heure est-il ?' },
+  { w: 'WHICH', fr: 'lequel, laquelle ; quel(le) dans un choix limité', ex: 'Which of the teeth is the most painful?', exfr: 'Laquelle des dents est la plus douloureuse ?' },
+  { w: 'WHO', fr: 'qui (les personnes)', ex: 'Who are you talking to?', exfr: 'À qui parles-tu ?' },
+  { w: 'WHOSE', fr: 'à qui, de qui (possession) + nom', ex: 'Whose pen is it?', exfr: 'À qui est ce stylo ?' },
+  { w: 'WHERE', fr: 'où', ex: 'Where is Brian?', exfr: 'Où est Brian ?' },
+  { w: 'WHEN', fr: 'quand', ex: 'When did the pain start?', exfr: 'Quand la douleur a-t-elle commencé ?', bonus: true },
+  { w: 'WHY', fr: 'pourquoi (la cause)', ex: 'Why are you so nervous?', exfr: 'Pourquoi es-tu si nerveux ?' },
+  { w: 'WHAT … FOR', fr: 'pour quoi faire, dans quel but', ex: 'What do you do that for?', exfr: 'Dans quel but fais-tu ça ?' },
+  { w: 'HOW', fr: 'comment ; + adjectif = combien, à quel point', ex: 'How are you? · How tall are you?', exfr: 'Comment vas-tu ? · Tu mesures combien ?' },
+  { w: 'HOW LONG', fr: 'combien de temps, depuis combien de temps (durée)', ex: 'How long have you had fever?', exfr: 'Depuis combien de temps as-tu de la fièvre ?' },
+  { w: 'HOW MUCH', fr: 'combien (+ indénombrable) ; un prix', ex: 'How much alcohol do you usually drink?', exfr: 'Combien d’alcool bois-tu d’habitude ?' },
+  { w: 'HOW MANY', fr: 'combien (+ dénombrable au pluriel)', ex: 'How many books have you read recently?', exfr: 'Combien de livres as-tu lus récemment ?' },
+  { w: 'HOW OFTEN', fr: 'à quelle fréquence, tous les combien', ex: 'How often do you get headaches?', exfr: 'À quelle fréquence as-tu des maux de tête ?' }
+];
+
+var QW_MCQ = [
+  { s: '___ do you brush your teeth? — Twice a day.', o: ['How long', 'How often', 'How many', 'How much'], a: 'How often', why: 'La réponse est une fréquence → HOW OFTEN.' },
+  { s: '___ have you had this pain? — For three days.', o: ['How long', 'How often', 'When', 'How much'], a: 'How long', why: 'Une durée → HOW LONG.' },
+  { s: '___ teeth have been extracted? — Two.', o: ['How much', 'How many', 'How often', 'Which'], a: 'How many', why: 'teeth = dénombrable au pluriel → HOW MANY.' },
+  { s: '___ sugar do you eat a day? — Too much!', o: ['How many', 'How much', 'How often', 'What'], a: 'How much', why: 'sugar = indénombrable → HOW MUCH.' },
+  { s: '___ tooth hurts the most, the upper one or the lower one?', o: ['What', 'Which', 'Who', 'Whose'], a: 'Which', why: 'Choix entre deux possibilités → WHICH.' },
+  { s: '___ is your dentist? — Dr Martin.', o: ['Which', 'Who', 'Whose', 'What'], a: 'Who', why: 'Une personne → WHO.' },
+  { s: '___ X-ray is this? — It’s Mr Smith’s.', o: ['Who', 'Who’s', 'Whose', 'Which'], a: 'Whose', why: 'Possession → WHOSE + nom. (who’s = who is)' },
+  { s: '___ does it hurt? — Here, on the left side.', o: ['When', 'Where', 'Which', 'How'], a: 'Where', why: 'Un lieu → WHERE.' },
+  { s: '___ did the pain start? — Last night.', o: ['When', 'Where', 'How long', 'How often'], a: 'When', why: 'Un moment → WHEN.' },
+  { s: '___ are you so nervous? — Because I’m afraid of the drill.', o: ['What', 'Why', 'How', 'Which'], a: 'Why', why: 'La cause (because) → WHY.' },
+  { s: '___ is this instrument for? — It’s for scaling.', o: ['Why', 'What', 'Which', 'How'], a: 'What', why: 'Le but → WHAT … FOR? (pour quoi faire ?)' },
+  { s: '___ tall are you? — 1.80 m.', o: ['How', 'What', 'How much', 'How long'], a: 'How', why: 'HOW + adjectif = combien, à quel point.' },
+  { s: '___ are you talking to? — To the dentist.', o: ['Who', 'Which', 'Whose', 'Where'], a: 'Who', why: 'Une personne, préposition renvoyée à la fin : Who are you talking TO?' },
+  { s: '___ is this book about? — Dental anatomy.', o: ['What', 'Which', 'Who', 'How'], a: 'What', why: 'De quoi… ? → WHAT … ABOUT? (préposition à la fin).' },
+  { s: '___ does a crown cost? — About 500 euros.', o: ['How many', 'How much', 'How long', 'How often'], a: 'How much', why: 'Un prix → HOW MUCH.' },
+  { s: '___ big is the abscess? — About one centimetre.', o: ['How', 'What', 'How much', 'Which'], a: 'How', why: 'HOW + adjectif (big) → la dimension.' },
+  { s: '___ should you change your toothbrush? — Every three months.', o: ['How long', 'How often', 'When', 'How many'], a: 'How often', why: 'Every three months = une fréquence → HOW OFTEN.' },
+  { s: '___ do you want? — An appointment, please.', o: ['What', 'Which', 'Who', 'How'], a: 'What', why: 'Que veux-tu ? → WHAT.' }
+];
+
+var ERR = [
+  { s: 'Who’s X-ray is this?', o: ['La phrase est correcte', 'Whose X-ray is this?', 'Who X-ray is this?'], a: 1, why: 'Possession → WHOSE. (who’s = who is)' },
+  { s: 'How much teeth do you have?', o: ['La phrase est correcte', 'How many teeth do you have?', 'How many tooth do you have?'], a: 1, why: 'teeth = dénombrable → HOW MANY + pluriel.' },
+  { s: 'To who are you talking?', o: ['La phrase est correcte', 'Who are you talking to?', 'Who you are talking to?'], a: 1, why: 'Préposition à la fin, et inversion (are you).' },
+  { s: 'How many sugar do you take?', o: ['La phrase est correcte', 'How much sugar do you take?', 'How many sugars you take?'], a: 1, why: 'sugar = indénombrable → HOW MUCH.' },
+  { s: 'How long do you brush your teeth? — Twice a day.', o: ['La phrase est correcte', 'How often do you brush your teeth?', 'How much do you brush your teeth?'], a: 1, why: 'Twice a day = une fréquence → HOW OFTEN.' },
+  { s: 'Whose is pen this?', o: ['La phrase est correcte', 'Whose pen is this?', 'Who’s pen is this?'], a: 1, why: 'WHOSE + nom, puis le verbe.' },
+  { s: 'How often do you get headaches?', o: ['La phrase est correcte', 'How long do you get headaches?', 'How much do you get headaches?'], a: 0, why: 'Fréquence → HOW OFTEN : correct.' },
+  { s: 'She cans speak English.', o: ['La phrase est correcte', 'She can speak English.', 'She can to speak English.'], a: 1, why: 'Modal invariable (pas de -s) + base verbale (sans to).' },
+  { s: 'You must to wear gloves.', o: ['La phrase est correcte', 'You must wear gloves.', 'You musts wear gloves.'], a: 1, why: 'MUST + base verbale, sans TO.' },
+  { s: 'I will can come tomorrow.', o: ['La phrase est correcte', 'I will be able to come tomorrow.', 'I can will come tomorrow.'], a: 1, why: 'Pas de double modal : WILL BE ABLE TO.' },
+  { s: 'He must have forgotten his appointment.', o: ['La phrase est correcte', 'He must had forgotten his appointment.', 'He must forgot his appointment.'], a: 0, why: 'Déduction sur le passé : MUST + HAVE (invariable) + participe passé : correct.' },
+  { s: 'You mustn’t come tomorrow: the appointment is cancelled.', o: ['La phrase est correcte', 'You don’t have to come tomorrow: the appointment is cancelled.', 'You mustn’t to come tomorrow.'], a: 1, why: 'Pas obligé → DON’T HAVE TO. (mustn’t = interdit)' },
+  { s: 'Do you can open your mouth?', o: ['La phrase est correcte', 'Can you open your mouth?', 'Are you can open your mouth?'], a: 1, why: 'Question : modal + sujet + base verbale (pas de do).' },
+  { s: 'Yesterday, I must go to the dentist.', o: ['La phrase est correcte', 'Yesterday, I had to go to the dentist.', 'Yesterday, I musted go to the dentist.'], a: 1, why: 'Obligation dans le passé → HAD TO.' },
+  { s: 'You should have brushed your teeth.', o: ['La phrase est correcte', 'You should brushed your teeth.', 'You should have brush your teeth.'], a: 0, why: 'Reproche : SHOULD HAVE + participe passé : correct.' }
+];
+
+var GRAMMAR_CARDS = [
+  { a: 'MUST : quels sens ?', b: 'Obligation forte · certitude', sub: 'You must wear gloves. · He must have an abscess.', note: '= devoir · présent seulement (passé : had to, futur : will have to).' },
+  { a: 'MAY : quels sens ?', b: 'Permission (formelle) · possibilité ≈ 50 %', sub: 'May I come in? · It may be due to low blood pressure.' },
+  { a: 'MIGHT ?', b: 'Possibilité plus faible (il se pourrait)', sub: 'The infection might be resistant.' },
+  { a: 'CAN / COULD ?', b: 'Pouvoir, savoir · could = passé ou plus poli', sub: 'Dentists can diagnose oral diseases. · They could use amalgam. · Could you open your mouth?' },
+  { a: 'SHOULD / OUGHT TO ?', b: 'Conseil (= devrait)', sub: 'You should floss every day. · You ought to see a dentist.' },
+  { a: 'Construction d’un modal ?', b: 'Modal + base verbale', sub: 'Pas de TO, pas de -S : She can swim. He must go.', note: 'Négation : must not · Question : Can you help me?' },
+  { a: 'Probabilité au présent ?', b: 'MUST / MAY / MIGHT + base verbale', sub: 'She must / may / might be ill.' },
+  { a: 'Probabilité au passé ?', b: 'MUST / MAY / MIGHT + HAVE + participe passé', sub: 'She must have been ill. · He may have had a reaction.', note: 'HAVE est invariable.' },
+  { a: 'MUST NOT ou DON’T HAVE TO ?', b: 'mustn’t = interdit · don’t have to = pas obligé', sub: 'You mustn’t smoke here. · You don’t have to come.' },
+  { a: 'Obligation au passé · au futur ?', b: 'HAD TO · WILL HAVE TO', sub: 'I had to go. · We will have to extract the tooth.', note: 'MUST n’a ni passé ni futur.' },
+  { a: 'Capacité au futur ?', b: 'WILL BE ABLE TO', sub: 'I will be able to come tomorrow.', note: 'Jamais « will can ».' },
+  { a: 'Reproche sur le passé ?', b: 'SHOULD HAVE + participe passé', sub: 'You should have called the dentist. = Tu aurais dû appeler le dentiste.' },
+  { a: 'Permission : quels modaux ?', b: 'CAN · COULD (poli) · MAY (formel)', sub: 'Can / Could / May I come in?' },
+  { a: '« Il a dû oublier son rendez-vous » (déduction)', b: 'He must have forgotten his appointment.' },
+  { a: '« Tu n’es pas obligé de venir »', b: 'You don’t have to come.' },
+  { a: 'WHO ou WHICH ?', b: 'WHO = personnes · WHICH = choses, ou choix limité', sub: 'Who is your dentist? · Which tooth hurts?' },
+  { a: 'WHOSE ?', b: 'À qui, de qui (possession) + nom', sub: 'Whose pen is it? = À qui est ce stylo ?', note: 'Jamais who’s (= who is).' },
+  { a: 'HOW LONG ou HOW OFTEN ?', b: 'HOW LONG = durée · HOW OFTEN = fréquence', sub: 'How long have you had this pain? · How often do you brush your teeth?' },
+  { a: 'HOW MUCH ou HOW MANY ?', b: 'MUCH + indénombrable · MANY + pluriel', sub: 'How much sugar? · How many teeth?' },
+  { a: 'HOW + adjectif ?', b: 'Combien, à quel point (degré)', sub: 'How tall are you? · How big is the box? · How angry is she?' },
+  { a: 'Où va la préposition dans une question ?', b: 'À la fin', sub: 'Who are you talking TO? · What is this book ABOUT?' },
+  { a: 'WHAT … FOR ?', b: 'Pour quoi faire, dans quel but', sub: 'What do you do that for?' },
+  { a: '« À quoi penses-tu ? »', b: 'What are you thinking of / about?' },
+  { a: '« De quoi traite ce livre ? »', b: 'What is this book about?' }
+];
+
+/* Tous les termes du cours : sert à ne pas compter « presque » un mot qui est en fait un autre terme */
+var ALL_TERMS = {};
+(function () {
+  function add(x) { if (x) ALL_TERMS[squash(x, true)] = true; }
+  function addW(x) { add(x.w); (x.alt || []).forEach(add); }
+  [DISEASES, VOC, FORMS, TYPES, ORAL, MATCH33, DENTVOC].forEach(function (L) { L.forEach(addW); });
+  PLURALS.concat(PLURALS_REVIEW, PLURALS_BONUS).forEach(function (x) { add(x.s); add(x.p); });
+  EQUIV.concat(EQUIV_BONUS).forEach(function (x) { add(x.c); add(x.s); (x.cAlt || []).forEach(add); (x.sAlt || []).forEach(add); });
+  DRUGVOC.forEach(function (x) { add(x.en); (x.alt || []).forEach(add); });
+})();
+
+/* =========================================================
+   3. CORRECTION
+   ========================================================= */
+// result: 'ok' | 'near' | 'ko' | 'empty' ; opts.articles (ignore a/an/the/to), opts.near (accepte les fautes de frappe)
+function grade(user, answers, opts) {
+  opts = opts || {};
+  var u = squash(user, opts.articles);
+  if (!u) return { r: 'empty' };
+  for (var i = 0; i < answers.length; i++) if (squash(answers[i], opts.articles) === u) return { r: 'ok' };
+  if (opts.near) {
+    if (ALL_TERMS[u]) return { r: 'ko', other: true };
+    var best = Infinity;
+    answers.forEach(function (a) { best = Math.min(best, lev(u, squash(a, opts.articles))); });
+    var L = squash(answers[0], opts.articles).length;
+    if (best <= (L >= 8 ? 2 : 1)) return { r: 'near' };
+  }
+  return { r: 'ko' };
+}
+function keyChecks(text, keys) {
+  var t = smart(text).toLowerCase();
+  return keys.map(function (k) {
+    var hit = new RegExp(k[1], 'i').test(t);
+    return { label: k[0], ok: k[2] ? !hit : hit };
+  });
+}
+
+/* =========================================================
+   4. FABRIQUES DE QUESTIONS
+   ========================================================= */
+function alts(x) { return [x.w].concat(x.alt || []); }
+function qDis(x) { return { kind: 'type', label: 'Quelle maladie ?', src: x.src, q: x.d, meta: 'Type : ' + x.type, answers: alts(x), best: x.name, fr: x.fr, note: x.note, near: true }; }
+function qVoc(x, label) { return { kind: 'type', label: label || 'Définition → mot', src: x.src, q: '“' + x.d + '”', answers: alts(x), best: x.w, fr: x.fr, note: x.note, near: true }; }
+function qFrEn(x) { return { kind: 'type', label: 'Traduis en anglais', src: x.src, q: x.fr, answers: alts(x), best: x.w, note: x.note, near: true }; }
+function qDrugFr(x) { return { kind: 'type', label: 'Traduis en anglais', src: x.src, q: x.fr, answers: [x.en].concat(x.alt || []), best: x.en, note: x.note, near: true }; }
+function qOral(x) { return x.d ? qVoc(x) : qFrEn(x); }
+function qPlural(p, dir) {
+  var toPl = dir ? dir === 'pl' : Math.random() < 0.6;
+  if (p.s === p.p) toPl = true;
+  return { kind: 'type', label: toPl ? 'Donne le pluriel' : 'Donne le singulier', src: p.src, q: '<span class="term">' + esc(toPl ? p.s : p.p) + '</span>', html: true,
+    answers: toPl ? [p.p].concat(p.alt || []) : [p.s], best: toPl ? p.p : p.s, note: 'Règle : ' + p.r + (p.note ? ' · ' + p.note : ''), near: false };
+}
+function qEquiv(e, dir) {
+  var cs = dir === 'cs';
+  return { kind: 'type', label: cs ? 'Équivalent scientifique' : 'Nom courant (non scientifique)', src: e.src, q: '<span class="term">' + esc(cs ? e.c : e.s) + '</span>', html: true,
+    answers: cs ? [e.s].concat(e.sAlt || []) : [e.c].concat(e.cAlt || []), best: cs ? e.s : e.c, fr: e.fr, note: e.note, near: true };
+}
+function qEquivRand(e) { return qEquiv(e, Math.random() < 0.5 ? 'cs' : 'sc'); }
+function qChoice(x, options, label) { return { kind: 'choice', label: label, src: x.src, q: x.s, hint: x.h, fr: x.fr, options: options, correct: x.a, why: x.why }; }
+function qMcq(x, label) { return { kind: 'choice', label: label, src: x.src, q: x.s, options: x.o, correct: x.a, why: x.why, long: x.o.some(function (o) { return o.length > 16; }) }; }
+function qFill(x, label) { return { kind: 'type', label: label, src: x.src, q: x.s, blank: true, hint: x.h, fr: x.fr, answers: [x.a].concat(x.acc || []), best: x.a, why: x.why, near: false, strict: true }; }
+function qTrans(x) { return { kind: 'trans', label: 'Traduis en anglais', q: x.fr, model: x.model, keys: x.keys, why: x.why }; }
+function qReph(x) { return { kind: 'trans', label: 'Reformule avec un modal', src: x.src, q: x.q, meta: 'Réécris la phrase avec un modal, en commençant par : ' + x.lead, ph: 'Ta phrase avec un modal…', model: x.model, keys: x.keys, why: x.why }; }
+function qTF(x) { return { kind: 'choice', label: 'Vrai ou faux ?', src: x.src, q: x.s, options: ['Vrai', 'Faux'], correct: x.a ? 'Vrai' : 'Faux', why: x.why }; }
+function qBV(x) { return { kind: 'choice', label: 'Maladie bactérienne ou virale ?', src: x.src, q: x.w, big: true, options: ['Bactérienne', 'Virale'], correct: x.a === 'B' ? 'Bactérienne' : 'Virale', why: cap(x.w) + ' (' + x.fr + ') : maladie ' + (x.a === 'B' ? 'bactérienne' : 'virale') + '.' }; }
+function qMatch33(x) {
+  var others = pick(MATCH33.filter(function (y) { return y.w !== x.w; }).map(function (y) { return y.w; }), 3);
+  return { kind: 'choice', label: 'Quel mot correspond ? (exercice p.33)', src: 'p.33', q: x.d, options: shuffle([x.w].concat(others)), correct: x.w, why: cap(x.w) + ' = ' + x.fr + ' (réponse ' + x.n + ' → ' + x.l + ').' };
+}
+var L_PROB = 'Complète avec MUST, MAY ou MIGHT';
+var L_MOD = 'Complète avec un modal';
+var L_QW = 'Complète avec le mot interrogatif';
+
+/* =========================================================
+   5. ONGLETS
+   ========================================================= */
+var TABS = ['flash', 'ex', 'exam', 'fiches'];
+var HASH = { flashcards: 'flash', exercices: 'ex', examen: 'exam', fiches: 'fiches' };
+function showTab(id, focus) {
+  TABS.forEach(function (t) {
+    var on = t === id, b = $('#tab-' + t);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+    b.tabIndex = on ? 0 : -1;
+    $('#panel-' + t).hidden = !on;
+  });
+  store.set('tab', id);
+  if (focus) $('#tab-' + id).focus();
+}
+TABS.forEach(function (t) { $('#tab-' + t).addEventListener('click', function () { showTab(t); }); });
+$('.tabs').addEventListener('keydown', function (e) {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  var cur = TABS.indexOf(TABS.filter(function (t) { return $('#tab-' + t).getAttribute('aria-selected') === 'true'; })[0]);
+  showTab(TABS[(cur + (e.key === 'ArrowRight' ? 1 : -1) + TABS.length) % TABS.length], true);
+  e.preventDefault();
+});
+
+/* =========================================================
+   6. FLASHCARDS
+   ========================================================= */
+function defCard(x, src) { return { a: '“' + x.d + '”', b: x.w, sub: x.fr, note: x.note || ((x.alt || []).length ? 'Aussi : ' + x.alt.join(', ') : ''), src: src || x.src }; }
+var DECKS = [
+  { id: 'gram', title: 'Règles : modaux + interrogatifs', src: 'Points 4–5', dirs: [['ab', 'Question → réponse']],
+    cards: GRAMMAR_CARDS.map(function (g, i) { return { a: g.a, b: g.b, sub: g.sub || '', note: g.note, src: i < 15 ? 'Modaux' : 'Interrogatifs' }; }) },
+  { id: 'qw', title: 'Mots interrogatifs', src: 'p.84–85', dirs: [['ab', 'Anglais → sens'], ['ba', 'Sens → anglais']],
+    cards: QW.map(function (q) { return { a: q.w, b: q.fr, sub: q.ex + ' = ' + q.exfr, note: q.bonus ? 'Pas dans le tableau du poly, mais à connaître.' : '', src: 'p.84–85' }; }) },
+  { id: 'dis', title: 'Maladies', src: 'p.25–27', dirs: [['ab', 'Symptômes → maladie'], ['ba', 'Maladie → symptômes']],
+    cards: DISEASES.map(function (x) { return { a: x.d, b: x.name, sub: x.fr + ' · ' + x.type, note: x.note, src: x.src }; }) },
+  { id: 'voc', title: 'Vocabulaire', src: 'p.25–28', dirs: [['ab', 'Définition → mot'], ['ba', 'Mot → définition']],
+    cards: VOC.map(function (x) { return defCard(x); }) },
+  { id: 'eq', title: 'Courant ↔ scientifique', src: 'p.25–34', dirs: [['ab', 'Courant → scientifique'], ['ba', 'Scientifique → courant']],
+    cards: EQUIV.map(function (e) { return { a: e.c, b: e.s, sub: e.fr, note: e.note, src: e.src, mono: true }; }) },
+  { id: 'plu', title: 'Pluriels', src: 'p.25–34', dirs: [['ab', 'Singulier → pluriel'], ['ba', 'Pluriel → singulier']],
+    cards: RULES.map(function (r) { return { a: r.s, b: r.p, sub: 'Terminaison · ' + r.ex, src: 'règle', mono: true }; })
+      .concat(PLURALS.map(function (p) { return { a: p.s, b: p.p, sub: 'Règle : ' + p.r, note: p.note, src: p.src, mono: true }; })) },
+  { id: 'drug', title: 'Médicaments', src: 'p.29–30', dirs: [['ab', 'Français → anglais'], ['ba', 'Anglais → français']],
+    cards: FORMS.concat(TYPES).map(function (x) { return { a: x.fr, b: x.w, sub: x.d, src: x.src }; })
+      .concat(DRUGVOC.map(function (x) { return { a: x.fr, b: x.en, sub: '', note: x.note, src: x.src }; })) },
+  { id: 'oral', title: 'Bouche et dents', src: 'p.31–34', dirs: [['ab', 'Français → anglais'], ['ba', 'Anglais → français']],
+    cards: ORAL.map(function (x) { return { a: x.fr, b: x.w, sub: x.d || '', note: x.note || (x.alt.length ? 'Aussi : ' + x.alt.join(', ') : ''), src: x.src }; }) },
+  { id: 'dent', title: 'Vocabulaire dentaire', src: 'p.35', dirs: [['ab', 'Définition → mot'], ['ba', 'Mot → définition']],
+    cards: DENTVOC.map(function (x) { return defCard(x, 'p.35 · ' + x.k); }) },
+  { id: 'plub', title: 'Pluriels bonus', src: 'révision + bonus', dirs: [['ab', 'Singulier → pluriel'], ['ba', 'Pluriel → singulier']],
+    cards: PLURALS_REVIEW.concat(PLURALS_BONUS).map(function (p) { return { a: p.s, b: p.p, sub: 'Règle : ' + p.r, note: p.note, src: p.src, mono: true }; }) },
+  { id: 'eqb', title: 'Équivalents bonus', src: 'p.25–35', dirs: [['ab', 'Courant → scientifique'], ['ba', 'Scientifique → courant']],
+    cards: EQUIV_BONUS.map(function (e) { return { a: e.c, b: e.s, sub: e.fr, note: e.note, src: e.src, mono: true }; }) }
+];
+var known = store.get('known', {}); if (!known || typeof known !== 'object') known = {};
+var fcShuffleOn = store.get('shuffle', true);
+var fc = null;
+
+function knownCount(deck) { var k = known[deck.id] || {}; return deck.cards.filter(function (c, i) { return k[i]; }).length; }
+function renderDecks() {
+  $('#decks').innerHTML = DECKS.map(function (d) {
+    return '<button class="chip" data-deck="' + d.id + '" aria-pressed="' + (fc && fc.deck.id === d.id) + '">' + esc(d.title) +
+      ' <span class="n">' + esc(d.src) + ' · ' + knownCount(d) + '/' + d.cards.length + '</span></button>';
+  }).join('');
+}
+function renderDir() {
+  var d = fc.deck;
+  $('#dirSeg').innerHTML = d.dirs.map(function (x) { return '<button data-dir="' + x[0] + '" aria-pressed="' + (fc.dir === x[0]) + '">' + esc(x[1]) + '</button>'; }).join('');
+  $('#fcShuffle').setAttribute('aria-pressed', fcShuffleOn ? 'true' : 'false');
+  $('#fcShuffle').textContent = 'Mélanger : ' + (fcShuffleOn ? 'oui' : 'non');
+}
+function fcStart(deckId, dir, only) {
+  var deck = DECKS.filter(function (d) { return d.id === deckId; })[0] || DECKS[0];
+  var order = only ? only.slice() : deck.cards.map(function (c, i) { return i; });
+  if (fcShuffleOn) order = shuffle(order);
+  var keepDir = dir && deck.dirs.some(function (x) { return x[0] === dir; }) ? dir : deck.dirs[0][0];
+  fc = { deck: deck, dir: keepDir, order: order, pos: 0, flipped: false, missed: [], good: 0 };
+  store.set('deck', deck.id);
+  renderDecks(); renderDir(); renderCard();
+  var row = $('#decks'), chip = $('#decks [aria-pressed="true"]');
+  if (row && chip && row.scrollWidth > row.clientWidth) row.scrollLeft = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
+}
+function face(card, side) {
+  var front = fc.dir === 'ab' ? card.a : card.b;
+  var back = fc.dir === 'ab' ? card.b : card.a;
+  if (side === 'front') return front;
+  return back;
+}
+function renderCard() {
+  var st = $('#fcStage');
+  if (fc.pos >= fc.order.length) { renderFcEnd(); return; }
+  var card = fc.deck.cards[fc.order[fc.pos]];
+  var lab = fc.deck.dirs.filter(function (x) { return x[0] === fc.dir; })[0][1];
+  var monoQ = card.mono ? ' term' : '';
+  var front = face(card, 'front'), back = face(card, 'back');
+  var subHtml = card.sub ? '<div class="fc-sub">' + esc(card.sub) + '</div>' : '';
+  var noteHtml = card.note ? '<div class="fc-note">' + esc(card.note) + '</div>' : '';
+  st.innerHTML =
+    '<div class="fc' + (fc.flipped ? ' flipped' : '') + '" id="fcCard" role="button" tabindex="0" aria-label="Carte. Appuie pour voir la réponse.">' +
+      '<div class="fc-inner">' +
+        '<div class="face front" aria-hidden="' + fc.flipped + '"><div class="fc-top"><span class="fc-tag">' + esc(lab.split(' → ')[0]) + '</span><span class="pg">' + esc(card.src) + '</span></div>' +
+          '<div class="fc-q' + monoQ + '">' + esc(front) + '</div><span class="fc-hint">Touche la carte (ou Espace) pour voir la réponse</span></div>' +
+        '<div class="face back" aria-hidden="' + !fc.flipped + '"><div class="fc-top"><span class="fc-tag">' + esc(lab.split(' → ')[1] || 'Réponse') + '</span><span class="pg">' + esc(card.src) + '</span></div>' +
+          '<div class="fc-a' + (card.mono ? ' term' : '') + '">' + esc(back) + '</div>' + subHtml + noteHtml + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="fc-actions"><button class="btn bad" id="fcNo">✗ À revoir</button><button class="btn good" id="fcYes">✓ Je savais</button></div>' +
+    '<div class="fc-progress"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + fc.order.length + '" aria-valuenow="' + fc.pos + '"><i style="width:' + Math.round(100 * fc.pos / fc.order.length) + '%"></i></div>' +
+      '<span class="stat">' + (fc.pos + 1) + ' / ' + fc.order.length + ' · ' + fc.good + ' ✓</span></div>' +
+    '<p class="kbd">Clavier : Espace = retourner · → = je savais · ← = à revoir</p>';
+  $('#fcCard').addEventListener('click', fcFlip);
+  $('#fcCard').addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fcFlip(); } });
+  $('#fcNo').addEventListener('click', function () { fcMark(false); });
+  $('#fcYes').addEventListener('click', function () { fcMark(true); });
+}
+function fcFlip() {
+  fc.flipped = !fc.flipped;
+  var el = $('#fcCard'); if (!el) return;
+  el.classList.toggle('flipped', fc.flipped);
+  $('.face.front', el).setAttribute('aria-hidden', fc.flipped);
+  $('.face.back', el).setAttribute('aria-hidden', !fc.flipped);
+}
+function fcMark(ok) {
+  var idx = fc.order[fc.pos];
+  known[fc.deck.id] = known[fc.deck.id] || {};
+  known[fc.deck.id][idx] = ok;
+  store.set('known', known);
+  if (ok) fc.good++; else fc.missed.push(idx);
+  fc.pos++; fc.flipped = false;
+  renderDecks(); renderCard();
+  var c = $('#fcCard'); if (c) c.focus({ preventScroll: true });
+}
+function nextDeckId() { var i = DECKS.indexOf(fc.deck); return DECKS[(i + 1) % DECKS.length].id; }
+function renderFcEnd() {
+  var n = fc.order.length, m = fc.missed.length;
+  var list = m ? '<ul class="review">' + fc.missed.map(function (i) {
+    var c = fc.deck.cards[i]; return '<li>' + esc(face(c, 'front')) + ' → <span class="ans">' + esc(face(c, 'back')) + '</span></li>';
+  }).join('') + '</ul>' : '<p>Tout est su. Passe aux exercices ou à un autre paquet.</p>';
+  $('#fcStage').innerHTML = '<div class="card score-card"><h2>Paquet terminé</h2><div class="score-row"><span class="big">' + fc.good + '/' + n + '</span><span class="muted">cartes sues</span></div>' +
+    (m ? '<h3>À revoir (' + m + ')</h3>' : '') + list +
+    '<div class="row">' + (m ? '<button class="btn primary" id="fcAgainMissed">Revoir les ' + m + ' ratées</button>' : '') +
+    '<button class="btn" id="fcAgainAll">Recommencer le paquet</button><button class="btn ghost" id="fcNext">Paquet suivant</button></div></div>';
+  if (m) $('#fcAgainMissed').addEventListener('click', function () { fcStart(fc.deck.id, fc.dir, fc.missed); });
+  $('#fcAgainAll').addEventListener('click', function () { fcStart(fc.deck.id, fc.dir); });
+  $('#fcNext').addEventListener('click', function () { fcStart(nextDeckId()); });
+}
+$('#decks').addEventListener('click', function (e) { var b = e.target.closest('[data-deck]'); if (b) fcStart(b.getAttribute('data-deck')); });
+$('#dirSeg').addEventListener('click', function (e) { var b = e.target.closest('[data-dir]'); if (b) fcStart(fc.deck.id, b.getAttribute('data-dir')); });
+$('#fcShuffle').addEventListener('click', function () { fcShuffleOn = !fcShuffleOn; store.set('shuffle', fcShuffleOn); fcStart(fc.deck.id, fc.dir); });
+$('#fcRestart').addEventListener('click', function () { fcStart(fc.deck.id, fc.dir); });
+document.addEventListener('keydown', function (e) {
+  if (e.defaultPrevented || $('#panel-flash').hidden || !fc || fc.pos >= fc.order.length) return;
+  var tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea') return;
+  if (tag === 'button' && !e.target.closest('#fcStage')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); fcMark(true); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); fcMark(false); }
+  else if (e.key === ' ' && e.target.id !== 'fcCard' && tag !== 'button') { e.preventDefault(); fcFlip(); }
+});
+
+/* =========================================================
+   7. EXERCICES
+   ========================================================= */
+var EXS = [
+  { group: 'Grammaire', id: 'prob', title: 'Probabilité : MUST / MAY / MIGHT', d: 'Avec l’indice de certitude, comme p.92', src: 'Point 4', fmt: 'QCM', make: function () { return shuffle(MOD_PROB).map(function (x) { return qChoice(x, ['MUST', 'MAY', 'MIGHT'], L_PROB); }); } },
+  { group: 'Grammaire', id: 'mcq', title: 'Modaux : choisis la bonne réponse', d: 'Obligation, interdiction, conseil, capacité (p.94–95)', src: 'Point 4', fmt: 'QCM', make: function () { return shuffle(MOD_MCQ).map(function (x) { return qMcq(x, 'Choisis le bon modal'); }); } },
+  { group: 'Grammaire', id: 'mfill', title: 'Modaux à écrire', d: 'must, should, have to, will have to… (p.93)', src: 'Point 4', fmt: 'à écrire', make: function () { return shuffle(MOD_FILL).map(function (x) { return qFill(x, L_MOD); }); } },
+  { group: 'Grammaire', id: 'reph', title: 'Reformule avec un modal', d: '« I think the tooth is infected » → The tooth may be infected', src: 'Point 4', fmt: 'à écrire', make: function () { return shuffle(MOD_REPH).map(qReph); } },
+  { group: 'Grammaire', id: 'qw', title: 'Interrogatifs : choisis', d: 'How long, how often, whose, which…', src: 'Point 5', fmt: 'QCM', make: function () { return shuffle(QW_MCQ).map(function (x) { return qMcq(x, 'Quel mot interrogatif ?'); }); } },
+  { group: 'Grammaire', id: 'qwfill', title: 'Interrogatifs à écrire', d: 'Le même exercice, sans choix proposés', src: 'Point 5', fmt: 'à écrire', make: function () { return shuffle(QW_MCQ).map(function (x) { return qFill(x, L_QW); }); } },
+  { group: 'Grammaire', id: 'err', title: 'Trouve l’erreur', d: 'Phrase correcte ou à corriger ?', src: 'Points 4–5', fmt: 'QCM', make: function () { return shuffle(ERR).map(function (x) { return { kind: 'choice', label: 'Cette phrase est-elle correcte ?', q: x.s, options: x.o, correct: x.o[x.a], why: x.why, long: true }; }); } },
+  { group: 'Grammaire', id: 'tr', title: 'Traduction FR → EN', d: 'Tu écris, puis tu compares au corrigé', src: 'Points 4–5', fmt: 'à écrire', make: function () { return shuffle(TRANS).map(qTrans); } },
+  { group: 'Vocabulaire', id: 'dis', title: 'Quelle maladie ?', d: 'Symptômes et type → nom de la maladie', src: 'p.25–27', fmt: 'à écrire', make: function () { return shuffle(DISEASES).map(qDis); } },
+  { group: 'Vocabulaire', id: 'voc', title: 'Définition → mot', d: 'tiredness, wheezing, jaundice, sputum…', src: 'p.25–28', fmt: 'à écrire', make: function () { return shuffle(VOC).map(function (x) { return qVoc(x); }); } },
+  { group: 'Vocabulaire', id: 'eq', title: 'Courant ↔ scientifique', d: 'measles = rubeola, gum = gingiva, canine = cuspid…', src: 'p.25–34', fmt: 'à écrire', make: function () { return shuffle(EQUIV.map(function (e) { return qEquiv(e, 'cs'); }).concat(EQUIV.map(function (e) { return qEquiv(e, 'sc'); }))); } },
+  { group: 'Vocabulaire', id: 'plu', title: 'Singulier ↔ pluriel', d: 'Les pluriels des pages 25 à 34 + quelques rappels', src: 'p.25–34', fmt: 'à écrire', make: function () { return shuffle(PLURALS.concat(pick(PLURALS_REVIEW, 6))).map(function (p) { return qPlural(p); }); } },
+  { group: 'Vocabulaire', id: 'bv', title: 'Bactérienne ou virale ?', d: 'pox, plague, cholera, measles…', src: 'p.25–29', fmt: 'QCM', make: function () { return shuffle(BV).map(qBV); } },
+  { group: 'Vocabulaire', id: 'tf', title: 'Médicaments : vrai ou faux ?', d: 'Les affirmations des pages 29–30', src: 'p.29–30', fmt: 'QCM', make: function () { return shuffle(TF).map(qTF); } },
+  { group: 'Vocabulaire', id: 'drug', title: 'Formes et types de médicaments', d: 'tablet, lozenge, antipyretics, antihistamines…', src: 'p.30', fmt: 'à écrire', make: function () { return shuffle(FORMS.concat(TYPES)).map(function (x) { return qVoc(x); }); } },
+  { group: 'Vocabulaire', id: 'drugfr', title: 'Médicaments : FR → EN', d: 'ordonnance, sans ordonnance, posologie…', src: 'p.29–30', fmt: 'à écrire', make: function () { return shuffle(DRUGVOC).map(qDrugFr); } },
+  { group: 'Vocabulaire', id: 'oral', title: 'La bouche et les dents', d: 'Schémas : uvula, hard palate, enamel, pulp…', src: 'p.31–34', fmt: 'à écrire', make: function () { return shuffle(ORAL).slice(0, 20).map(qOral); } },
+  { group: 'Vocabulaire', id: 'm33', title: 'Appariement p.33', d: 'Incisor, canine, premolar… avec leur définition', src: 'p.33', fmt: 'QCM', make: function () { return shuffle(MATCH33).map(qMatch33); } },
+  { group: 'Vocabulaire', id: 'dent', title: 'Vocabulaire dentaire A → V', d: 'toothbrush, scaling, pulpitis, root canal…', src: 'p.35', fmt: 'à écrire', make: function () { return shuffle(DENTVOC).map(function (x) { return qVoc(x); }); } },
+  { group: 'Bonus', id: 'plub', title: 'Pluriels bonus', d: 'Rappels p.20–21 + calculus, alveolus, foramen…', src: 'bonus', fmt: 'à écrire', make: function () { return shuffle(PLURALS_REVIEW.concat(PLURALS_BONUS)).map(function (p) { return qPlural(p); }); } },
+  { group: 'Bonus', id: 'eqb', title: 'Équivalents bonus', d: 'caries, dentures, maxilla, mandible…', src: 'p.25–35', fmt: 'à écrire', make: function () { return shuffle(EQUIV_BONUS).map(qEquivRand); } },
+  { group: 'Bonus', id: 'mix', title: 'Grammaire mélangée à écrire', d: 'Probabilité + modaux + interrogatifs, sans choix', src: 'Points 4–5', fmt: 'à écrire', make: function () { return shuffle(pick(MOD_PROB, 6).map(function (x) { return qFill(x, L_PROB); }).concat(pick(MOD_FILL, 6).map(function (x) { return qFill(x, L_MOD); }), pick(QW_MCQ, 6).map(function (x) { return qFill(x, L_QW); }))); } }
+];
+var bests = store.get('best', {}); if (!bests || typeof bests !== 'object') bests = {};
+var run = null;
+
+function renderExHome() {
+  var groups = ['Vocabulaire', 'Grammaire', 'Bonus'];
+  $('#exHome').innerHTML = '<p class="muted">Chaque série reprend un type d’exercice de l’éval. Correction immédiate, puis tu peux refaire seulement tes erreurs.</p>' +
+    groups.map(function (g) {
+      return '<div class="ex-group"><h2>' + esc(g) + '</h2><div class="ex-grid">' + EXS.filter(function (x) { return x.group === g; }).map(function (x) {
+        var b = bests[x.id];
+        return '<button class="tile" data-ex="' + x.id + '"><span class="t">' + esc(x.title) + '</span><span class="d">' + esc(x.d) + '</span>' +
+          '<span class="meta"><span class="fmt">' + esc(x.fmt) + ' · ' + esc(x.src) + '</span>' + (b != null ? '<span class="best">meilleur : ' + b + ' %</span>' : '') + '</span></button>';
+      }).join('') + '</div></div>';
+    }).join('');
+}
+$('#exHome').addEventListener('click', function (e) { var t = e.target.closest('[data-ex]'); if (t) exStart(t.getAttribute('data-ex')); });
+
+function exStart(id, items) {
+  var ex = EXS.filter(function (x) { return x.id === id; })[0];
+  run = { ex: ex, items: items || ex.make(), i: 0, score: 0, wrong: [], answered: false };
+  $('#exHome').hidden = true; $('#exRun').hidden = false;
+  renderQ();
+  window.scrollTo({ top: $('#panel-ex').offsetTop - 70, behavior: 'auto' });
+}
+function exQuit() { run = null; $('#exRun').hidden = true; $('#exHome').hidden = false; renderExHome(); }
+
+function promptHtml(it) {
+  var q = it.html ? it.q : (it.blank || /_{3}/.test(it.q) ? blankify(it.q) : esc(it.q));
+  var cls = it.big ? ' term' : '';
+  var hint = '';
+  if (it.hint) hint += '<p class="q-hint">Indice : <b>' + esc(it.hint) + '</b></p>';
+  if (it.fr) hint += it.kind === 'type' && !it.blank ? '' : '<p class="q-hint">« ' + esc(it.fr) + ' »</p>';
+  if (it.meta) hint += '<p class="q-hint">' + esc(it.meta) + '</p>';
+  return '<div class="q-text' + cls + '">' + q + '</div>' + hint;
+}
+function renderQ() {
+  var it = run.items[run.i], n = run.items.length;
+  run.answered = false;
+  var body = '';
+  if (it.kind === 'type') {
+    body = '<form id="qForm" class="row" autocomplete="off">' +
+      '<input class="inp" id="qIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ta réponse…" aria-label="Ta réponse">' +
+      '<button class="btn primary" id="qGo" type="submit">Vérifier</button></form>';
+  } else if (it.kind === 'choice') {
+    body = '<div class="opts' + (it.long ? ' long' : '') + '" role="group" aria-label="Choix">' + it.options.map(function (o, k) { return '<button class="opt" data-k="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div>';
+  } else {
+    body = '<textarea class="inp" id="qIn" autocapitalize="sentences" autocorrect="off" spellcheck="false" placeholder="' + esc(it.ph || 'Écris ta traduction en anglais…') + '" aria-label="Ta réponse"></textarea>' +
+      '<div class="row"><button class="btn primary" id="qReveal">Voir la correction</button></div>';
+  }
+  $('#exRun').innerHTML =
+    '<div class="card q-card">' +
+      '<div class="q-head"><button class="btn ghost" id="qQuit">← Exercices</button><span class="stat">' + esc(run.ex.title) + ' · ' + (run.i + 1) + '/' + n + ' · ' + fmtScore(run.score) + ' ✓</span></div>' +
+      '<div class="bar"><i style="width:' + Math.round(100 * run.i / n) + '%"></i></div>' +
+      '<div class="q-head"><span class="q-label">' + esc(it.label) + '</span>' + (it.src ? '<span class="pg">' + esc(it.src) + '</span>' : '') + '</div>' +
+      promptHtml(it) + body + '<div id="qFb" aria-live="polite"></div>' +
+    '</div>';
+  $('#qQuit').addEventListener('click', exQuit);
+  if (it.kind === 'type') {
+    $('#qForm').addEventListener('submit', function (e) { e.preventDefault(); if (run.answered) nextQ(); else checkType(it); });
+    setTimeout(function () { var x = $('#qIn'); if (x) x.focus(); }, 30);
+  } else if (it.kind === 'choice') {
+    $$('.opt', $('#exRun')).forEach(function (b) { b.addEventListener('click', function () { if (!run.answered) checkChoice(it, +b.getAttribute('data-k')); }); });
+  } else {
+    $('#qReveal').addEventListener('click', function () { revealTrans(it); });
+    setTimeout(function () { var x = $('#qIn'); if (x) x.focus(); }, 30);
+  }
+}
+function fmtScore(s) { return (Math.round(s * 2) / 2).toString().replace('.', ','); }
+function nextBtn() { return '<div class="row"><button class="btn primary" id="qNext">' + (run.i + 1 < run.items.length ? 'Suivant →' : 'Voir mon score') + '</button></div>'; }
+function bindNext() { var b = $('#qNext'); if (b) { b.addEventListener('click', nextQ); setTimeout(function () { b.focus({ preventScroll: true }); }, 20); } }
+function feedbackHtml(res, it) {
+  var cls = res.r === 'ok' ? 'ok' : (res.r === 'near' ? 'near' : 'ko');
+  var head = res.r === 'ok' ? '✓ Juste' : res.r === 'near' ? '≈ Presque : vérifie l’orthographe' : res.r === 'empty' ? '✗ Pas de réponse' : '✗ Faux';
+  var lines = '';
+  var also = (it.answers || []).slice(1).filter(function (a) { var q = squash(a, true); return q !== squash(it.answers[0], true) && q !== squash(it.best, true); });
+  if (res.r !== 'ok' || also.length) lines += '<div>Réponse : <b>' + esc(it.best) + '</b>' + (also.length ? ' <span class="muted small">(accepté aussi : ' + esc(also.join(', ')) + ')</span>' : '') + '</div>';
+  if (res.other) lines += '<div class="small">Ce mot existe dans le cours, mais il ne correspond pas ici.</div>';
+  if (it.fr && it.kind === 'type' && !it.blank) lines += '<div class="small">Français : ' + esc(it.fr) + '</div>';
+  if (it.why) lines += '<div class="small">' + esc(it.why) + '</div>';
+  if (it.note) lines += '<div class="small muted">' + esc(it.note) + '</div>';
+  return '<div class="fb ' + cls + '"><span class="h">' + head + '</span>' + lines + '</div>';
+}
+function checkType(it) {
+  var inp = $('#qIn'), v = inp.value;
+  var res = grade(v, it.answers, { articles: !it.strict, near: it.near });
+  if (res.r === 'empty') { inp.focus(); return; }
+  run.answered = true;
+  inp.classList.add(res.r === 'ok' ? 'ok' : res.r === 'near' ? 'near' : 'ko');
+  inp.readOnly = true;
+  if (res.r === 'ok') run.score++; else run.wrong.push({ it: it, given: v });
+  $('#qGo').textContent = run.i + 1 < run.items.length ? 'Suivant →' : 'Voir mon score';
+  $('#qFb').innerHTML = feedbackHtml(res, it);
+  $('#qGo').focus({ preventScroll: true });
+}
+function checkChoice(it, k) {
+  run.answered = true;
+  var chosen = it.options[k], ok = chosen === it.correct;
+  $$('.opt', $('#exRun')).forEach(function (b, j) {
+    b.disabled = true;
+    if (it.options[j] === it.correct) b.classList.add('right');
+    else if (j === k) b.classList.add('wrong');
+  });
+  if (ok) run.score++; else run.wrong.push({ it: it, given: chosen });
+  var resHtml = '<div class="fb ' + (ok ? 'ok' : 'ko') + '"><span class="h">' + (ok ? '✓ Juste' : '✗ Faux : ' + esc(it.correct)) + '</span>' + (it.why ? '<div class="small">' + esc(it.why) + '</div>' : '') + '</div>';
+  $('#qFb').innerHTML = resHtml + nextBtn();
+  bindNext();
+}
+function revealTrans(it) {
+  var v = $('#qIn').value;
+  run.answered = true;
+  $('#qIn').readOnly = true;
+  var checks = v.trim() ? keyChecks(v, it.keys) : [];
+  var keysHtml = checks.length ? '<div class="keys">' + checks.map(function (c) { return '<span class="key ' + (c.ok ? 'y' : 'n') + '">' + (c.ok ? '✓ ' : '✗ ') + esc(c.label) + '</span>'; }).join('') + '</div>' : '';
+  $('#qReveal').parentNode.remove();
+  $('#qFb').innerHTML = '<div class="fb ' + (checks.length && checks.every(function (c) { return c.ok; }) ? 'ok' : 'near') + '"><span class="h">Corrigé</span><ul class="model">' +
+    it.model.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>' + (checks.length ? '<div class="small">Points clés repérés dans ta phrase :</div>' + keysHtml : '') +
+    '<div class="small">' + esc(it.why) + '</div></div>' +
+    '<p class="small muted">Compare honnêtement avec le corrigé :</p><div class="row"><button class="btn good" data-s="1">✓ J’avais juste</button><button class="btn" data-s="0.5">≈ À moitié</button><button class="btn bad" data-s="0">✗ À revoir</button></div>';
+  $$('[data-s]', $('#qFb')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = +b.getAttribute('data-s');
+      run.score += s; if (s < 1) run.wrong.push({ it: it, given: v });
+      nextQ();
+    });
+  });
+}
+function nextQ() {
+  run.i++;
+  if (run.i < run.items.length) renderQ(); else renderExEnd();
+}
+function answerText(it) { return it.kind === 'type' ? it.best : it.kind === 'choice' ? it.correct : it.model[0]; }
+function promptText(it) { var t = it.html ? it.q.replace(/<[^>]+>/g, '') : it.q; return t.replace(/_{3,}/g, '___'); }
+function renderExEnd() {
+  var n = run.items.length, pct = Math.round(100 * run.score / n);
+  if (bests[run.ex.id] == null || pct > bests[run.ex.id]) { bests[run.ex.id] = pct; store.set('best', bests); }
+  var m = run.wrong.length;
+  $('#exRun').innerHTML = '<div class="card score-card"><h2>' + esc(run.ex.title) + '</h2>' +
+    '<div class="score-row"><span class="big">' + fmtScore(run.score) + '/' + n + '</span><span class="muted">' + pct + ' %' + (pct >= 85 ? ' · prêt pour l’éval sur ce point' : pct >= 60 ? ' · encore un tour' : ' · relis la fiche puis recommence') + '</span></div>' +
+    (m ? '<h3>Tes erreurs</h3><ul class="review">' + run.wrong.map(function (w) { return '<li>' + esc(promptText(w.it)) + ' → <span class="ans">' + esc(answerText(w.it)) + '</span>' + (w.given ? ' <span class="muted small">(toi : ' + esc(w.given) + ')</span>' : '') + '</li>'; }).join('') + '</ul>' : '<p>Aucune erreur.</p>') +
+    '<div class="row">' + (m ? '<button class="btn primary" id="exRetryWrong">Refaire mes ' + m + ' erreurs</button>' : '') + '<button class="btn" id="exRetry">Recommencer (mélangé)</button><button class="btn ghost" id="exBack">← Exercices</button></div></div>';
+  if (m) $('#exRetryWrong').addEventListener('click', function () { exStart(run.ex.id, shuffle(run.wrong.map(function (w) { return w.it; }))); });
+  $('#exRetry').addEventListener('click', function () { exStart(run.ex.id); });
+  $('#exBack').addEventListener('click', exQuit);
+}
+
+/* =========================================================
+   8. EXAMEN BLANC (20 min)
+   ========================================================= */
+var EXAM_MIN = 20;
+var exam = null;
+function renderExamIntro() {
+  var best = store.get('examBest', null);
+  $('#examIntro').innerHTML = '<div class="card score-card"><h2>Examen blanc · 20 minutes</h2>' +
+    '<p>Même format que les deux évals précédentes, tiré au hasard à chaque fois :</p>' +
+    '<div class="tbl"><table><thead><tr><th>Partie</th><th>Exercice</th><th>Points</th></tr></thead><tbody>' +
+    '<tr><td class="w">A</td><td>Trouver le mot qui correspond à la définition (p.25–35)</td><td class="end">8</td></tr>' +
+    '<tr><td class="w">B</td><td>Singulier ou pluriel des termes irréguliers</td><td class="end">5</td></tr>' +
+    '<tr><td class="w">C</td><td>Équivalents scientifiques / non scientifiques</td><td class="end">4</td></tr>' +
+    '<tr><td class="w">D</td><td>Compléter les phrases avec un modal</td><td class="end">6</td></tr>' +
+    '<tr><td class="w">E</td><td>Compléter avec le bon mot interrogatif</td><td class="end">5</td></tr>' +
+    '<tr><td class="w">F</td><td>Traduire / reformuler (tu t’auto-notes avec le corrigé)</td><td class="end">8</td></tr>' +
+    '</tbody></table></div>' +
+    '<p class="small muted">Le chrono démarre au clic. À 0:00, la copie est rendue automatiquement. Les fautes d’orthographe comptent faux, comme à l’éval. L’éval dure 15 à 20 min : vise d’avoir fini avant 15:00.</p>' +
+    (best != null ? '<p class="best">Meilleure note : ' + String(best).replace('.', ',') + ' / 20</p>' : '') +
+    '<div class="row"><button class="btn primary" id="examGo">Commencer l’examen (20:00)</button></div></div>';
+  $('#examGo').addEventListener('click', examStart);
+}
+function examBuild() {
+  var A = pick(VOC, 4).map(function (x) { return qVoc(x); })
+    .concat(pick(DISEASES, 1).map(qDis), pick(DENTVOC, 2).map(function (x) { return qVoc(x); }), pick(FORMS.concat(TYPES), 1).map(function (x) { return qVoc(x); }));
+  var B = pick(PLURALS, 4).concat(pick(PLURALS_REVIEW, 1)).map(function (p) { return qPlural(p); });
+  var C = pick(EQUIV, 4).map(qEquivRand);
+  var D = pick(MOD_PROB, 2).map(function (x) { return qFill(x, 'MUST / MAY / MIGHT'); })
+    .concat(pick(MOD_FILL, 4).map(function (x) { return qFill(x, 'Modal'); }));
+  var E = pick(QW_MCQ, 5).map(function (x) { return qFill(x, 'Interrogatif'); });
+  var tr = function (g, n) { return pick(TRANS.filter(function (t) { return t.g === g; }), n).map(qTrans); };
+  var F = tr('mod', 1).concat(pick(MOD_REPH, 1).map(qReph), tr('qw', 2));
+  return [
+    { k: 'A', t: 'Vocabulaire : trouve le mot qui correspond à la définition', items: A, pts: 1 },
+    { k: 'B', t: 'Donne le singulier ou le pluriel', items: B, pts: 1 },
+    { k: 'C', t: 'Donne l’équivalent scientifique ou courant', items: C, pts: 1 },
+    { k: 'D', t: 'Complète avec un modal', items: D, pts: 1 },
+    { k: 'E', t: 'Complète avec le bon mot interrogatif', items: E, pts: 1 },
+    { k: 'F', t: 'Traduis en anglais (ou reformule avec un modal)', items: F, pts: 2 }
+  ];
+}
+function examStart() {
+  exam = { secs: examBuild(), end: Date.now() + EXAM_MIN * 60 * 1000, start: Date.now(), timer: null, done: false };
+  var num = 0;
+  var html = '<div class="timerbar"><span class="clock" id="clock" aria-live="off">20:00</span><button class="btn primary" id="examSubmit">Rendre ma copie</button></div><div class="panel" style="padding-top:12px">';
+  exam.secs.forEach(function (sec) {
+    var max = sec.items.length * sec.pts;
+    html += '<section class="ex-sec"><h2>' + sec.k + '. ' + esc(sec.t) + '<span class="pts">/ ' + max + '</span></h2>';
+    sec.items.forEach(function (it) {
+      num++; it.id = 'eq' + num; it.num = num;
+      var hint = (it.hint ? ' <span class="muted small">(' + esc(it.hint) + ')</span>' : '') +
+        (it.meta ? '<br><span class="muted small">' + esc(it.meta) + '</span>' : '') +
+        (it.fr && it.blank ? '<br><span class="muted small">« ' + esc(it.fr) + ' »</span>' : '');
+      var qtxt = it.html ? it.q : ((it.blank || /_{3}/.test(it.q)) ? blankify(it.q) : esc(it.q));
+      var lead = (it.kind === 'trans' || it.label === 'Définition → mot') ? '' : '<span class="muted small">' + esc(it.label) + ' : </span>';
+      html += '<div class="eq" id="box-' + it.id + '"><label for="' + it.id + '"><span class="num">' + num + '.</span><span>' + lead + qtxt + hint + '</span></label>' +
+        (it.kind === 'trans' ? '<textarea class="inp" id="' + it.id + '" autocapitalize="sentences" autocorrect="off" spellcheck="false"></textarea>'
+          : '<input class="inp" id="' + it.id + '" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">') +
+        '<div class="corr" id="corr-' + it.id + '"></div></div>';
+    });
+    html += '</section>';
+  });
+  html += '<div class="row"><button class="btn primary" id="examSubmit2">Rendre ma copie</button></div></div>';
+  $('#examIntro').hidden = true; $('#examRes').hidden = true; $('#examRun').hidden = false;
+  $('#examRun').innerHTML = html;
+  $('#examSubmit').addEventListener('click', examAskSubmit);
+  $('#examSubmit2').addEventListener('click', examAskSubmit);
+  $$('#examRun input.inp').forEach(function (inp) {
+    inp.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return; e.preventDefault();
+      var all = $$('#examRun .inp'), i = all.indexOf(inp); if (all[i + 1]) all[i + 1].focus();
+    });
+  });
+  tick(); exam.timer = setInterval(tick, 500);
+  window.scrollTo({ top: $('#panel-exam').offsetTop - 70, behavior: 'auto' });
+  setTimeout(function () { var f = $('#examRun .inp'); if (f) f.focus({ preventScroll: true }); }, 50);
+}
+function tick() {
+  if (!exam || exam.done) return;
+  var left = Math.max(0, Math.round((exam.end - Date.now()) / 1000));
+  var c = $('#clock'); if (!c) return;
+  c.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
+  c.className = 'clock' + (left <= 60 ? ' bad' : left <= 300 ? ' warn' : '');
+  if (left === 0) examSubmit(true);
+}
+var askTimer = null;
+function examAskSubmit(e) {
+  var b = e.currentTarget;
+  if (b.getAttribute('data-confirm') === '1') { examSubmit(false); return; }
+  $$('#examSubmit, #examSubmit2').forEach(function (x) { x.setAttribute('data-confirm', '1'); x.textContent = 'Confirmer : rendre la copie'; });
+  clearTimeout(askTimer);
+  askTimer = setTimeout(function () { $$('#examSubmit, #examSubmit2').forEach(function (x) { x.removeAttribute('data-confirm'); x.textContent = 'Rendre ma copie'; }); }, 3500);
+}
+function examSubmit(auto) {
+  if (!exam || exam.done) return;
+  exam.done = true; exam.timeUp = auto === true; clearInterval(exam.timer);
+  var used = Math.min(EXAM_MIN * 60, Math.round((Date.now() - exam.start) / 1000));
+  exam.used = used; exam.auto = 0; exam.autoMax = 0; exam.transMax = 0; exam.self = {};
+  exam.secs.forEach(function (sec) {
+    sec.items.forEach(function (it) {
+      var el = $('#' + it.id), v = el.value, box = $('#box-' + it.id), corr = $('#corr-' + it.id);
+      el.readOnly = true;
+      if (it.kind === 'trans') {
+        exam.transMax += sec.pts;
+        var checks = v.trim() ? keyChecks(v, it.keys) : [];
+        corr.innerHTML = '<div class="fb near"><span class="h">Corrigé</span><ul class="model">' + it.model.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>' +
+          (checks.length ? '<div class="keys">' + checks.map(function (c) { return '<span class="key ' + (c.ok ? 'y' : 'n') + '">' + (c.ok ? '✓ ' : '✗ ') + esc(c.label) + '</span>'; }).join('') + '</div>' : '<div class="small">Pas de réponse.</div>') +
+          '<div class="small">' + esc(it.why) + '</div><div class="small">Ta note pour cette phrase :</div>' +
+          '<div class="grade3" data-q="' + it.id + '"><button data-v="0" aria-pressed="false">0 · faux</button><button data-v="1" aria-pressed="false">1 · à moitié</button><button data-v="2" aria-pressed="false">2 · juste</button></div></div>';
+      } else {
+        exam.autoMax += sec.pts;
+        var res = grade(v, it.answers, { articles: !it.strict, near: false });
+        var ok = res.r === 'ok';
+        if (ok) exam.auto += sec.pts;
+        box.classList.add(ok ? 'ok' : 'ko');
+        corr.innerHTML = ok ? '<span class="ans">✓ Juste</span>' : '<span>✗ ' + (v.trim() ? '' : 'Pas de réponse · ') + 'Réponse : <span class="ans">' + esc(it.best) + '</span></span>' + (it.why ? ' <span class="muted small">' + esc(it.why) + '</span>' : (it.note ? ' <span class="muted small">' + esc(it.note) + '</span>' : ''));
+      }
+    });
+  });
+  $$('#examRun .grade3').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-v]'); if (!b) return;
+      $$('button', g).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      exam.self[g.getAttribute('data-q')] = +b.getAttribute('data-v');
+      renderExamScore();
+    });
+  });
+  $('.timerbar').remove();
+  var sub2 = $('#examSubmit2'); if (sub2) sub2.parentNode.remove();
+  $('#examRes').hidden = false;
+  renderExamScore();
+  window.scrollTo({ top: $('#panel-exam').offsetTop - 70, behavior: 'smooth' });
+}
+function renderExamScore() {
+  var selfPts = 0, graded = 0;
+  Object.keys(exam.self).forEach(function (k) { selfPts += exam.self[k]; graded++; });
+  var nTrans = exam.transMax / 2;
+  var total = exam.auto + selfPts, max = exam.autoMax + exam.transMax;
+  var note = Math.round(total / max * 20 * 2) / 2;
+  var complete = graded === nTrans;
+  if (complete) { var best = store.get('examBest', null); if (best == null || note > best) store.set('examBest', note); }
+  var mm = Math.floor(exam.used / 60), ss = exam.used % 60;
+  $('#examRes').innerHTML = '<div class="card score-card"><h2>' + (exam.timeUp ? 'Temps écoulé : copie rendue' : 'Copie rendue') + '</h2>' +
+    '<div class="score-row"><span class="big">' + String(note).replace('.', ',') + ' / 20</span><span class="muted">' + total + ' / ' + max + ' points · ' + mm + ' min ' + String(ss).padStart(2, '0') + ' s</span></div>' +
+    (complete ? '' : '<p class="warnbox small">Note provisoire : auto-note encore ' + (nTrans - graded) + ' traduction' + (nTrans - graded > 1 ? 's' : '') + ' (partie E, boutons 0 / 1 / 2 sous chaque corrigé).</p>') +
+    '<p class="small muted">Les corrections sont sous chaque question, plus bas.</p>' +
+    '<div class="row"><button class="btn primary" id="examNew">Nouvel examen</button><button class="btn ghost" id="examHome">Retour</button></div></div>';
+  $('#examNew').addEventListener('click', examStart);
+  $('#examHome').addEventListener('click', function () { exam = null; $('#examRun').hidden = true; $('#examRes').hidden = true; $('#examIntro').hidden = false; renderExamIntro(); });
+}
+
+/* =========================================================
+   9. FICHES
+   ========================================================= */
+function tbl(head, rows) {
+  return '<div class="tbl"><table><thead><tr>' + head.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>';
+}
+function trow() { return '<tr>' + Array.prototype.slice.call(arguments).join('') + '</tr>'; }
+function td(s, cls) { return '<td' + (cls ? ' class="' + cls + '"' : '') + '>' + s + '</td>'; }
+function renderFiches() {
+  var h = '';
+  h += '<nav class="toc" aria-label="Sommaire des fiches">' +
+    [['f-pieges', 'Pièges'], ['f-mod', 'THE MODALS'], ['f-qw', 'Interrogatifs'], ['f-dis', 'Maladies p.25–27'], ['f-voc', 'Vocabulaire p.27–28'], ['f-eq', 'Bactéries, virus, équivalents'], ['f-drug', 'Médicaments p.29–30'], ['f-oral', 'Bouche et dents p.31–34'], ['f-dent', 'Dentaire p.35'], ['f-plu', 'Pluriels']]
+      .map(function (x) { return '<a href="#' + x[0] + '">' + x[1] + '</a>'; }).join('') + '</nav>';
+
+  h += '<div class="sheet warnbox" id="f-pieges"><h3>Les pièges qui coûtent des points</h3><ul>' +
+    '<li>Modal + <b>base verbale</b> : pas de TO, pas de -S. <i>She can swim · You must wear gloves</i> (jamais <i>must to</i>, <i>cans</i>). Exceptions : ought <b>to</b>, have <b>to</b>.</li>' +
+    '<li><b>MUSTN’T</b> = c’est interdit ≠ <b>DON’T HAVE TO</b> = tu n’es pas obligé.</li>' +
+    '<li>MUST n’a ni passé ni futur : <b>had to</b>, <b>will have to</b>. CAN au futur : <b>will be able to</b>. Jamais <i>will must</i>, <i>will can</i>.</li>' +
+    '<li>Probabilité au passé : MUST / MAY / MIGHT + <b>HAVE + participe passé</b> (<i>He must have forgotten</i>). Reproche : <b>should have</b> + participe passé (= aurais dû).</li>' +
+    '<li><b>WHOSE</b> (à qui) ≠ <b>WHO’S</b> (= who is). <b>HOW LONG</b> = durée ≠ <b>HOW OFTEN</b> = fréquence.</li>' +
+    '<li><b>HOW MUCH</b> + indénombrable (sugar) · <b>HOW MANY</b> + pluriel (teeth). La préposition va <b>à la fin</b> : <i>Who are you talking to?</i></li>' +
+    '<li><b>rubella</b> = rubéole (German measles) ≠ <b>rubeola</b> = rougeole (measles). Les antibiotiques n’agissent <b>pas</b> sur les virus.</li>' +
+    '<li><b>virus → viruses</b>, sinus → sinuses (jamais viri) · <b>apex → apices</b> · <b>gingiva → gingivae</b> · tooth → teeth.</li>' +
+    '<li>UK : <b>chemist</b> = pharmacien, <b>the chemist’s</b> = la pharmacie · US : chemist = chimiste seulement. <b>OTC</b> = sans ordonnance.</li></ul></div>';
+
+  h += '<section class="sheet" id="f-mod"><h2>THE MODALS <span class="pg">Point 4 · p.90–95</span></h2>' +
+    tbl(['Modal', 'Sens', 'Exemple'], [
+      trow(td('MUST', 'w'), td('devoir : obligation forte · certitude (déduction)'), td('<i>You must wear gloves.</i> · <i>He must have an abscess.</i>')),
+      trow(td('MAY', 'w'), td('permission (formelle) · possibilité ≈ 50 %'), td('<i>May I come in?</i> · <i>It may be due to low blood pressure.</i>')),
+      trow(td('MIGHT', 'w'), td('possibilité plus faible'), td('<i>The infection might be resistant.</i>')),
+      trow(td('CAN', 'w'), td('pouvoir, savoir (capacité) · permission'), td('<i>Dentists can diagnose oral diseases.</i>')),
+      trow(td('COULD', 'w'), td('passé de can · demande plus polie'), td('<i>They could use amalgam.</i> · <i>Could you open your mouth?</i>')),
+      trow(td('SHOULD<br>OUGHT TO', 'w'), td('conseil (= devrait)'), td('<i>You should floss every day.</i> · <i>You ought to see a dentist.</i>'))
+    ]) +
+    '<div class="rule"><span class="k">Construction</span><ul><li>Modal + <b>base verbale</b>, invariable : <i>She can speak English.</i> (pas de -s, pas de to)</li>' +
+    '<li>Négation : <i>must not (mustn’t), cannot (can’t), should not (shouldn’t)</i> · Question : modal devant le sujet, sans DO : <i>Can you help me?</i></li></ul></div>' +
+    '<div class="scale" role="img" aria-label="Degré de certitude : MUST environ 90 pour cent, MAY environ 50 pour cent, MIGHT environ 30 pour cent">' +
+      '<h3>Probabilité : à quel point tu es sûr ?</h3>' +
+      '<div class="scale-track">' +
+        '<span class="scale-pt" style="left:10%"></span><span class="scale-lab" style="left:10%">MUST</span><span class="scale-sub" style="left:10%">≈ 90 %</span>' +
+        '<span class="scale-pt" style="left:50%"></span><span class="scale-lab" style="left:50%">MAY</span><span class="scale-sub" style="left:50%">≈ 50 %</span>' +
+        '<span class="scale-pt" style="left:72%"></span><span class="scale-lab" style="left:72%">MIGHT</span><span class="scale-sub" style="left:72%">≈ 30 %</span>' +
+      '</div><div class="scale-ends"><span>c’est sûr</span><span>peu probable</span></div>' +
+      '<p class="small">Sûrement <b>pas</b> : <i>It must not be serious</i> (ou <i>It can’t be serious</i>). Au passé : + <b>HAVE + participe passé</b> : <i>He must have forgotten · She may have gone home · It might have been a shadow.</i></p>' +
+    '</div>' +
+    '<div class="pair"><div class="vs bad"><span class="k">MUSTN’T</span><span>= c’est <b>interdit</b></span><span class="ex-line">You mustn’t smoke in the clinic.</span></div>' +
+    '<div class="vs good"><span class="k">DON’T HAVE TO</span><span>= tu n’es <b>pas obligé</b></span><span class="ex-line">You don’t have to come: the appointment is cancelled.</span></div></div>' +
+    tbl(['Présent', 'Passé', 'Futur'], [
+      trow(td('<b>MUST</b> / have to', 'w'), td('<b>HAD TO</b>'), td('<b>WILL HAVE TO</b>')),
+      trow(td('<b>CAN</b>', 'w'), td('<b>COULD</b> / was able to'), td('<b>WILL BE ABLE TO</b>')),
+      trow(td('<b>MAY</b> (permission)', 'w'), td('was allowed to'), td('will be allowed to'))
+    ]) +
+    '<div class="rule"><span class="k">Modal + HAVE + participe passé</span><ul>' +
+      '<li><b>must have</b> + p.p. = a dû (déduction) : <i>He must have forgotten his appointment.</i></li>' +
+      '<li><b>may / might have</b> + p.p. = a peut-être : <i>He may have had a reaction to the anesthetic.</i></li>' +
+      '<li><b>should have</b> + p.p. = aurait dû (reproche) : <i>You should have called the dentist.</i></li>' +
+      '<li><b>could have</b> + p.p. = aurait pu : <i>It could have been worse.</i></li></ul></div></section>';
+
+  h += '<section class="sheet" id="f-qw"><h2>Les interrogatifs <span class="pg">Point 5 · p.84–85</span></h2>' +
+    tbl(['Mot', 'Sens', 'Exemple'], QW.map(function (q) {
+      return trow(td(esc(q.w), 'w'), td(esc(q.fr) + (q.bonus ? ' <span class="pg">bonus</span>' : '')), td('<i>' + esc(q.ex) + '</i><br><span class="muted small">' + esc(q.exfr) + '</span>'));
+    })) +
+    '<div class="rule"><span class="k">À retenir</span><ul>' +
+      '<li>La <b>préposition va à la fin</b> : <i>Who are you talking TO?</i> (À qui…) · <i>What is this book ABOUT?</i> (De quoi…) · <i>Where do you come FROM?</i> (D’où…) · <i>What are you thinking OF / ABOUT?</i></li>' +
+      '<li><b>WHO</b> = personnes · <b>WHICH</b> = choses, ou choix dans un groupe limité · <b>WHAT</b> + nom = quel(le) : <i>What time is it?</i></li>' +
+      '<li><b>WHOSE + nom</b> : <i>Whose X-ray is this?</i> = À qui est cette radio ? (jamais <i>who’s</i>).</li>' +
+      '<li><b>HOW + adjectif</b> = combien, à quel point : <i>How tall are you? · How big is the abscess?</i></li>' +
+      '<li><b>HOW LONG</b> + present perfect pour « depuis combien de temps » : <i>How long have you had this pain?</i></li></ul></div></section>';
+
+  h += '<section class="sheet" id="f-dis"><h2>Maladies <span class="pg">p.25–27</span></h2>' +
+    tbl(['Maladie', 'Signes et symptômes', 'Type', 'Français'], DISEASES.map(function (x) { return trow(td(esc(x.name), 'w'), td(esc(x.d)), td(esc(x.type)), td(esc(x.fr))); })) + '</section>';
+
+  h += '<section class="sheet" id="f-voc"><h2>Vocabulaire des symptômes <span class="pg">p.25–28</span></h2>' +
+    tbl(['Mot', 'Français', 'Définition'], VOC.map(function (x) { return trow(td(esc(x.w), 'w'), td(esc(x.fr)), td(esc(x.d.replace(/_{3,}/g, '…')) + ' <span class="pg">' + esc(x.src) + '</span>')); })) + '</section>';
+
+  h += '<section class="sheet" id="f-eq"><h2>Bactérienne ou virale · courant ↔ scientifique <span class="pg">p.28–29</span></h2>' +
+    '<p><b>Bactériennes</b> : ' + BV.filter(function (x) { return x.a === 'B'; }).map(function (x) { return esc(x.w) + ' <span class="muted">(' + esc(x.fr) + ')</span>'; }).join(', ') + '.</p>' +
+    '<p><b>Virales</b> : ' + BV.filter(function (x) { return x.a === 'V'; }).map(function (x) { return esc(x.w) + ' <span class="muted">(' + esc(x.fr) + ')</span>'; }).join(', ') + '.</p>' +
+    tbl(['Nom courant', 'Nom scientifique', 'Français'], EQUIV.map(function (x) { return trow(td(esc(x.c), 'w'), td(esc(x.s), 'w'), td(esc(x.fr) + ' <span class="pg">' + esc(x.src) + '</span>')); })) +
+    '<h3>Bonus</h3>' +
+    tbl(['Courant', 'Scientifique', 'Français'], EQUIV_BONUS.map(function (x) { return trow(td(esc(x.c)), td(esc(x.s), 'w'), td(esc(x.fr) + ' <span class="pg">' + esc(x.src) + '</span>')); })) + '</section>';
+
+  h += '<section class="sheet" id="f-drug"><h2>Médicaments <span class="pg">p.29–30</span></h2>' +
+    '<h3>Vrai ou faux ?</h3>' +
+    tbl(['Affirmation', 'Réponse'], TF.map(function (x) { return trow(td(esc(x.s) + '<br><span class="muted small">' + esc(x.why) + '</span>'), td('<span class="tf ' + (x.a ? 't">VRAI' : 'f">FAUX') + '</span>')); })) +
+    '<h3>Formes</h3>' +
+    tbl(['Anglais', 'Français', 'Définition'], FORMS.map(function (x) { return trow(td(esc(x.w), 'w'), td(esc(x.fr)), td(esc(x.d))); })) +
+    '<h3>Types</h3>' +
+    tbl(['Anglais', 'Français', 'Rôle'], TYPES.map(function (x) { return trow(td(esc(x.w), 'w'), td(esc(x.fr)), td(esc(x.d))); })) +
+    '<h3>Mots du texte</h3>' +
+    tbl(['Français', 'Anglais', 'À savoir'], DRUGVOC.map(function (x) { return trow(td(esc(x.fr)), td(esc(x.en), 'w'), td(esc(x.note || ''), 'small')); })) + '</section>';
+
+  h += '<section class="sheet" id="f-oral"><h2>La bouche et les dents <span class="pg">p.31–34</span></h2>' +
+    tbl(['Anglais', 'Français', 'Précision'], ORAL.map(function (x) { return trow(td(esc(x.w), 'w'), td(esc(x.fr)), td(esc(x.d || x.note || (x.alt.length ? 'Aussi : ' + x.alt.join(', ') : '')) + ' <span class="pg">' + esc(x.src) + '</span>')); })) +
+    '<h3>Corrigé de l’appariement <span class="pg">p.33</span></h3>' +
+    tbl(['N°', 'Mot', 'Définition', 'Lettre'], MATCH33.map(function (x) { return trow(td(String(x.n), 'end'), td(esc(x.w) + ' <span class="muted small">(' + esc(x.fr) + ')</span>', 'w'), td(esc(x.d)), td(esc(x.l), 'end')); })) + '</section>';
+
+  h += '<section class="sheet" id="f-dent"><h2>Vocabulaire dentaire A → V <span class="pg">p.35</span></h2>' +
+    '<p class="small muted">Le poly donne seulement les mots : ces définitions sont des définitions types, pour t’entraîner à l’exercice « définition → mot ».</p>' +
+    tbl(['', 'Mot', 'Français', 'Définition'], DENTVOC.map(function (x) { return trow(td(esc(x.k), 'end'), td(esc(x.w), 'w'), td(esc(x.fr)), td(esc(x.d))); })) + '</section>';
+
+  h += '<section class="sheet" id="f-plu"><h2>Pluriels irréguliers <span class="pg">p.25–34 + rappels</span></h2>' +
+    tbl(['Règle', 'Exemple'], RULES.map(function (r) { return trow(td(esc(r.s + ' → ' + r.p), 'end'), td('<span class="mono">' + esc(r.ex) + '</span>')); })) +
+    tbl(['Singulier', 'Pluriel', 'Règle'], PLURALS.map(function (p) { return trow(td(esc(p.s), 'w'), td('<b>' + esc(p.p) + '</b>' + (p.alt ? ' <span class="muted small">(ou ' + esc(p.alt.join(', ')) + ')</span>' : '')), td(esc(p.r) + (p.note ? ' · ' + esc(p.note) : ''))); })) +
+    '<p class="small muted">Rappels p.20–21 : ' + PLURALS_REVIEW.map(function (p) { return esc(p.s) + ' → <b>' + esc(p.p) + '</b>'; }).join(' · ') + '.</p></section>';
+
+  $('#fichesBody').innerHTML = h;
+}
+
+/* =========================================================
+   10. DÉMARRAGE
+   ========================================================= */
+renderExHome();
+renderExamIntro();
+renderFiches();
+fcStart(store.get('deck', 'gram'));
+var fromHash = HASH[(location.hash || '').replace('#', '')];
+var savedTab = store.get('tab', 'flash');
+showTab(fromHash || (TABS.indexOf(savedTab) >= 0 ? savedTab : 'flash'));
+})();
+</script>
