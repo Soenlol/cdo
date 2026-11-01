@@ -1,0 +1,22 @@
+{
+  "name": "PistePoussiere",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Rallye": {
+        "$path": "src/shared",
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    },
+    "ServerScriptService": {
+      "$path": "src/server"
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/player"
+      }
+    }
+  }
+}
